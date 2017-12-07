@@ -5,7 +5,8 @@ $(function(){
     }
     checkoutMenu($("a[va="+localStorage['currentPage']+"]"));
     $(".nav-masthead a").click(function(){
-        checkoutMenu(this);
+        if($(this).attr("va")!=localStorage['currentPage'])
+            checkoutMenu(this);
     });
     function checkoutMenu(obj){
         localStorage['currentPage'] = $(obj).attr("va");
