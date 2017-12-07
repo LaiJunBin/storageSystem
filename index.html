@@ -1,76 +1,84 @@
 <!doctype html>
 <html lang="en">
-  <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <meta name="description" content="">
-    <meta name="author" content="">
-    <title>倉儲系統</title>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css" integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb" crossorigin="anonymous">
-    <link href="./css/main.css" rel="stylesheet">
-    <link rel="stylesheet" href="./js/jquery/jquery-ui.css">
-    <link rel="stylesheet" href="./js/jquery/jquery-ui.theme.css">
-    <link rel="stylesheet" href="./js/jquery/jquery-ui.structure.css">
-    <script src="./js/jquery/external/jquery-3.2.1.min.js"></script>
-    <script src="./js/jquery/jquery-ui.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js" integrity="sha384-alpBpkh1PFOepccYVYDB4do5UnbKysX5WZXm3XxPqe5iKTfUKjNkCk9SaVuEZflJ" crossorigin="anonymous"></script>
-    <script src="./js/main.js"></script>
-    <script>
-      
-    </script>
-  </head>
 
-  <body>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="">
+  <meta name="author" content="">
+  <title>倉儲系統</title>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css" integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb"
+    crossorigin="anonymous">
+  <link href="./css/main.css" rel="stylesheet">
+  <link rel="stylesheet" href="./js/jquery/jquery-ui.css">
+  <link rel="stylesheet" href="./js/jquery/jquery-ui.theme.css">
+  <link rel="stylesheet" href="./js/jquery/jquery-ui.structure.css">
+  <script src="./js/jquery/external/jquery-3.2.1.min.js"></script>
+  <script src="./js/jquery/jquery-ui.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
+    crossorigin="anonymous"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js" integrity="sha384-alpBpkh1PFOepccYVYDB4do5UnbKysX5WZXm3XxPqe5iKTfUKjNkCk9SaVuEZflJ"
+    crossorigin="anonymous"></script>
+  <script src="./js/main.js"></script>
+</head>
 
-    <div class="site-wrapper">
+<body>
 
-      <div class="site-wrapper-inner">
+  <div class="site-wrapper">
 
-        <div class="cover-container">
+    <div class="site-wrapper-inner">
 
-          <header class="masthead clearfix">
-            <div class="inner">
-              <h3 class="masthead-brand">穀保家商餐飲管理科倉儲系統</h3>
-              <nav class="nav nav-masthead">
-                <a class="nav-link" href="#" va="home">主頁面</a>
-                <a class="nav-link" href="#" va="Login">登入</a>
-              </nav>
-            </div>
-          </header>
+      <div class="cover-container">
 
-          <div type="home" class="inner cover content">
-            <h1 class="cover-heading">操　　作</h1>
-           <p class="lead">
-              <a href="#" class="btn btn-lg btn-secondary">進貨</a>
-            </p>
-            <p class="lead">
-          <a href="#" class="btn btn-lg btn-secondary">庫存量</a>
-            </p>
+        <header class="masthead clearfix">
+          <div class="inner">
+            <h3 class="masthead-brand">穀保家商餐飲管理科<br>倉儲系統</h3>
+            <nav class="nav nav-masthead">
+              <a class="nav-link" href="#" va="home">主頁面</a>
+            
+              <a class="nav-link" href="#" va="Login">登入</a>
+            </nav>
           </div>
-          <div type="Login" class="inner cover content">
-            <h1 class="cover-heading">登　　入</h1>
-            <form action="d" method="post" onsubmit="return onLogin()">
+        </header>
+
+        <div type="home" class="inner cover content">
+          <h1 class="cover-heading">操　　作</h1>
+          <p class="lead">
+            <a href="#" class="btn btn-lg btn-secondary">進貨</a>
+          </p>
+          <p class="lead">
+            <a href="#" class="btn btn-lg btn-secondary">庫存量</a>
+          </p>
+        </div>
+        <div type="Login" class="inner cover content">
+          <h1 class="cover-heading">登　　入</h1>
+          <form action="d" method="post" onsubmit="return onLogin()">
             <p class="lead">
               <input class="form-control" type="text" name="username" placeholder="請輸入帳號">
             </p>
             <p class="lead">
-              <input class="form-control" type="text" name="password" placeholder="請輸入密碼">
+              <input class="form-control" type="password" name="password" placeholder="請輸入密碼">
+            </p>
+            <p class="lead" style="text-shadow:0px 0px 0px #fff;text-align:right;">
+              <input type="checkbox" name="autoLogin">
+              自動登入
             </p>
             <p class="lead">
               <button type="submit" class="btn btn-dark loginBtn">登入</button>
             </p>
-            </form>
-          </div>
-          <footer class="mastfoot">
-            <div class="inner">
-              <p>由<a href="http://dp.kpvs.ntpc.edu.tw/bin/home.php">資料處理科</a>賴俊賓製作, <a href="https://github.com/xyz607xx">@Github</a>.</p>
-            </div>
-          </footer>
-
+          </form>
         </div>
+        <footer class="mastfoot">
+          <div class="inner">
+            <p>由<a href="http://dp.kpvs.ntpc.edu.tw/bin/home.php">資料處理科</a>賴俊賓製作, <a href="https://github.com/xyz607xx">@Github</a>.</p>
+          </div>
+        </footer>
 
       </div>
 
     </div>
-  </body>
+
+  </div>
+</body>
+
 </html>
