@@ -23,5 +23,29 @@ $(function(){
     }
 });
 function onLogin(){
+    var username = $("input[name=username]").val();
+    var password = $("input[name=password]").val();
+    var autoLogin = $("input[name=autoLogin]").prop("checked");
+    $.ajax({
+        url: './database/Login.php',
+        type: 'POST',
+        data: {
+            username:username,
+            password:password,
+            autoLogin:autoLogin,
+        },
+        error: function(xhr) {
+            alert('Ajax request 發生錯誤')
+        },
+        success: function(result) {
+            if(result=="false"){
+                alert("帳號或密碼錯誤!");
+            }else{
+                if(autoLogin){
+                    localStorage['autoLogin']=result;
+                }
+            }
+        }
+    });
     return false;
 }
