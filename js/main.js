@@ -1,11 +1,25 @@
 $(function(){
     var fadeOn = false;
-    if(localStorage['currentPage'] === undefined){
+    if(localStorage['currentPage'] === "undefined"){
         localStorage['currentPage']="home";
     }
     checkoutMenu($("a[va="+localStorage['currentPage']+"]"));
     $(".nav-masthead a").click(function(){
-        if($(this).attr("va")!=localStorage['currentPage'])
+        if($(this).attr("va")=="LogOut"){
+            $.ajax({
+                url: './database/LogOut.php',
+                type: 'GET',
+                error: function(xhr) {
+                    alert('Ajax request 發生錯誤')
+                },
+                success: function(result) {
+                    localStorage.removeItem("autoLogin");
+                    alert("登出成功!");
+                    $("a[va=home]").click();
+                    location.reload();
+                }
+            });
+        }else if($(this).attr("va")!=localStorage['currentPage'])
             checkoutMenu(this);
     });
     function checkoutMenu(obj){
@@ -44,6 +58,8 @@ function onLogin(){
                 if(autoLogin){
                     localStorage['autoLogin']=result;
                 }
+                $("a[va=home]").click();
+                location.reload();
             }
         }
     });
