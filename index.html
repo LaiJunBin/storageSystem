@@ -47,10 +47,32 @@
                     alert('Ajax request 發生錯誤')
                   },
                   success: function (result) {
-                    if (result == "true") {
-                      $(".nav-masthead").append("<a class=nav-link href=# va=manageClassName>管理教室名稱</a>");
-                      $(".nav-masthead").append("<a class=nav-link href=# va=addItem>新增物品名稱</a>");
+                    if (result) {
+                      $(".nav-masthead").append("<a class=nav-link href=# va=manageClassName>管理教室</a>");
+                      $(".nav-masthead").append("<a class=nav-link href=# va=addItem>管理物品</a>");
                       $(".nav-masthead").append("<a class=nav-link href=# va=LogOut>登出</a>");
+                      var availableTags;
+                      $.ajax({
+                          url: './database/select.php',
+                          type: 'POST',
+                          data: {
+                              table: "storage_classlist",
+                              target: "sc_className",
+                              match:"",
+                              all:"true",
+                          },
+                          error: function (xhr) {
+                              alert('Ajax request 發生錯誤')
+                          },
+                          success: function (result) {
+                              localStorage['temp']=result;
+                          }
+                      });
+                      availableTags=localStorage['temp'].split(",");
+                      localStorage.removeItem("temp");
+                      $("div[type=removeClassName] input[name=className]").autocomplete({
+                          source: availableTags
+                      });
                     } else {
                       $(".nav-masthead").append("<a class=nav-link href=# va=Login>登入</a>");
                     }
@@ -77,7 +99,7 @@
             <a href="#" class="btn btn-lg btn-secondary" va="addClassName">新增教室</a>
           </p>
           <p class="lead">
-            <a href="#" class="btn btn-lg btn-secondary">刪除教室</a>
+            <a href="#" class="btn btn-lg btn-secondary" va="removeClassName">刪除教室</a>
           </p>
         </div>
         <div type="Login" class="inner cover content">
@@ -100,6 +122,17 @@
         <div type="addClassName" class="inner cover content">
           <h1 class="cover-heading">新增教室</h1>
           <form action="#" method="post" onsubmit="return addClassName()">
+            <p class="lead">
+              <input class="form-control" required type="text" name="className" placeholder="請輸入教室名稱">
+            </p>
+            <p class="lead">
+              <button type="submit" class="btn btn-dark Btn">送出</button>
+            </p>
+          </form>
+        </div>
+        <div type="removeClassName" class="inner cover content">
+          <h1 class="cover-heading">刪除教室</h1>
+          <form action="#" method="post" onsubmit="return removeClassName()">
             <p class="lead">
               <input class="form-control" required type="text" name="className" placeholder="請輸入教室名稱">
             </p>
