@@ -21,6 +21,7 @@
     crossorigin="anonymous"></script>
   <script src="./js/main.js"></script>
 </head>
+
 <body>
 
   <div class="site-wrapper">
@@ -40,21 +41,23 @@
                   url: './database/checkLogin.php',
                   type: 'POST',
                   data: {
-                      autoLoginValue:localStorage['autoLogin'],
+                    autoLoginValue: localStorage['autoLogin'],
                   },
-                  error: function(xhr) {
-                      alert('Ajax request 發生錯誤')
+                  error: function (xhr) {
+                    alert('Ajax request 發生錯誤')
                   },
-                  success: function(result) {
-                      if(result=="true"){
-                        $(".nav-masthead").append("<a class=nav-link href=# va=LogOut>登出</a>")
-                      }else{
-                        $(".nav-masthead").append("<a class=nav-link href=# va=Login>登入</a>")
-                      }
+                  success: function (result) {
+                    if (result == "true") {
+                      $(".nav-masthead").append("<a class=nav-link href=# va=addClassName>新增教室名稱</a>");
+                      $(".nav-masthead").append("<a class=nav-link href=# va=addItem>新增物品名稱</a>");
+                      $(".nav-masthead").append("<a class=nav-link href=# va=LogOut>登出</a>");
+                    } else {
+                      $(".nav-masthead").append("<a class=nav-link href=# va=Login>登入</a>");
                     }
+                  }
                 });
               </script>
-              
+
             </nav>
           </div>
         </header>
@@ -70,7 +73,7 @@
         </div>
         <div type="Login" class="inner cover content">
           <h1 class="cover-heading">登　　入</h1>
-          <form action="d" method="post" onsubmit="return onLogin()">
+          <form action="#" method="post" onsubmit="return onLogin()">
             <p class="lead">
               <input class="form-control" type="text" name="username" placeholder="請輸入帳號">
             </p>
@@ -78,11 +81,21 @@
               <input class="form-control" type="password" name="password" placeholder="請輸入密碼">
             </p>
             <p class="lead" style="text-shadow:0px 0px 0px #fff;text-align:right;">
-              <input type="checkbox" name="autoLogin">
-              自動登入
+              <input type="checkbox" name="autoLogin"> 自動登入
             </p>
             <p class="lead">
-              <button type="submit" class="btn btn-dark loginBtn">登入</button>
+              <button type="submit" class="btn btn-dark Btn">登入</button>
+            </p>
+          </form>
+        </div>
+        <div type="addClassName" class="inner cover content">
+          <h1 class="cover-heading">新增教室</h1>
+          <form action="#" method="post" onsubmit="return addClassName()">
+            <p class="lead">
+              <input class="form-control" type="text" name="className" placeholder="請輸入教室名稱">
+            </p>
+            <p class="lead">
+              <button type="submit" class="btn btn-dark Btn">送出</button>
             </p>
           </form>
         </div>
