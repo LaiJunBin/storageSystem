@@ -21,7 +21,6 @@
     crossorigin="anonymous"></script>
   <script src="./js/main.js"></script>
 </head>
-
 <body>
 
   <div class="site-wrapper">
@@ -35,8 +34,27 @@
             <h3 class="masthead-brand">穀保家商餐飲管理科<br>倉儲系統</h3>
             <nav class="nav nav-masthead">
               <a class="nav-link" href="#" va="home">主頁面</a>
-            
-              <a class="nav-link" href="#" va="Login">登入</a>
+              <span class="space2">&nbsp;&nbsp;</span>
+              <script>
+                $.ajax({
+                  url: './database/checkLogin.php',
+                  type: 'POST',
+                  data: {
+                      autoLoginValue:localStorage['autoLogin'],
+                  },
+                  error: function(xhr) {
+                      alert('Ajax request 發生錯誤')
+                  },
+                  success: function(result) {
+                      if(result=="true"){
+                        $(".nav-masthead").append("<a class=nav-link href=# va=LogOut>登出</a>")
+                      }else{
+                        $(".nav-masthead").append("<a class=nav-link href=# va=Login>登入</a>")
+                      }
+                    }
+                });
+              </script>
+              
             </nav>
           </div>
         </header>
