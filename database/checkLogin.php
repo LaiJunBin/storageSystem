@@ -1,10 +1,10 @@
 <?php
     if(isset($_POST['autoLoginValue']) && check($_POST['autoLoginValue'])){
-        echo "true";
+        echo (bool)true;
     }elseif(isset($_COOKIE['login']) && check($_COOKIE['login'])){
-        echo "true";
+        echo (bool)true;
     }else{
-        echo "false";
+        echo (bool)false;
     }
     return;
     function check($value){
