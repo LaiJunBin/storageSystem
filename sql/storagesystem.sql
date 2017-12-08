@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- 主機: 127.0.0.1
--- 產生時間： 2017-12-08 06:59:23
+-- 產生時間： 2017-12-08 13:01:45
 -- 伺服器版本: 10.1.28-MariaDB
 -- PHP 版本： 7.1.11
 
@@ -50,8 +50,16 @@ INSERT INTO `logindata` (`l_id`, `l_username`, `l_password`, `l_checkUser`) VALU
 
 CREATE TABLE `storage_classlist` (
   `sc_id` int(10) NOT NULL,
-  `sc_className` int(10) NOT NULL
+  `sc_className` varchar(10) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- 資料表的匯出資料 `storage_classlist`
+--
+
+INSERT INTO `storage_classlist` (`sc_id`, `sc_className`) VALUES
+(3, '中餐一'),
+(4, '中餐二');
 
 -- --------------------------------------------------------
 
@@ -120,7 +128,7 @@ ALTER TABLE `logindata`
 -- 使用資料表 AUTO_INCREMENT `storage_classlist`
 --
 ALTER TABLE `storage_classlist`
-  MODIFY `sc_id` int(10) NOT NULL AUTO_INCREMENT;
+  MODIFY `sc_id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- 使用資料表 AUTO_INCREMENT `storage_itemlist`
