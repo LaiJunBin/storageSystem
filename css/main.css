@@ -131,3 +131,8 @@ body {
     width: 42rem;
   }
 }
+.space2{
+  cursor:default;
+  user-select:none;
+  
+}
