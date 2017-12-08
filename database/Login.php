@@ -9,6 +9,7 @@
         echo "false";
         return;
     }
-    setCookie("login",md5($record['l_username']),time()+3600);
-    echo md5($record['l_username']);
+    $value = md5($record['l_username']);
+    setCookie("login",$value,time()+3600);
+    echo $value;
 ?>
