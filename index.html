@@ -125,8 +125,6 @@
                                       $("div[type=purchase] form").append("<p class=lead><input class=form-control required type=text name=amount placeholder=請輸入數量></p>");
                                       $("div[type=purchase] form").append("<p class=lead><button type=submit class='btn btn-dark Btn'>進貨</button></p>");
                                     }
-                                    includeJs("./js/main.js");
-                                    includeJs("./js/jquery/jquery-ui.min.js");
                                 }
                             });
                           }
@@ -149,6 +147,8 @@
                           },
                           success: function (result) {
                               $("#accordion").append(result);
+                              includeJs("./js/main.js");
+                              includeJs("./js/jquery/jquery-ui.min.js");
                           }
                       });
                   }
