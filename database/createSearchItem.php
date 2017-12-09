@@ -14,8 +14,8 @@
             $bool=false;
             echo "<tr>";
             echo "<td>".$record['sr_item']."</td>";
-            echo "<td>".$record['sr_amount']."</td>";
-            echo "<td>".$record['sr_unit']."</td>";
+            echo "<td width=30%>".$record['sr_amount']." ".$record['sr_unit']."</td>";
+            //echo "<td>".."</td>";
             echo "</tr>";
         }
         echo "</table>";
