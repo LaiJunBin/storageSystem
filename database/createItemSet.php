@@ -10,7 +10,7 @@
         }
         $bool=false;
         ?>
-            <input type="radio" va=<?php echo $record['si_item'];?> name="item" id="i<?php echo $n;?>" <?php if($n==1){ ?> checked <?php } ?>>
+            <input type="radio" va=<?php echo $record['si_item'];?> name="item" unit="<?php echo $record['si_unit'];?>" id="i<?php echo $n;?>" <?php if($n==1){ ?> checked <?php } ?>>
             <label for="i<?php echo $n;?>">
                 <?php echo $record['si_item']."/".$record['si_unit'];?>
             </label>
