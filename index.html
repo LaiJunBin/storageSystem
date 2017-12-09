@@ -59,12 +59,11 @@
                       $(".nav-masthead").append("<a class=nav-link href=# va=manageItem>管理物品</a>");
                       $(".nav-masthead").append("<a class=nav-link href=# va=LogOut>登出</a>");
                       $("#purchase").append("<a href=# class='btn btn-lg btn-secondary' va=purchase>進貨</a>");
-                      $(".cover-container").append("<div></div>");
                       $.ajax({
                         url: "data/loginOption.html",
                         method:"POST",
                         success:function(result){
-                            $(".cover-container div:last").append(result);
+                            $($("footer").prev()).append(result);
                             var availableTags;
                             $.ajax({
                                 url: './database/select.php',
@@ -145,12 +144,11 @@
                     } else {
                       $(".nav-masthead").append("<a class=nav-link href=# va=Login>登入</a>");
                       includeJs("./js/main.js");
-                      $(".cover-container").append("<div></div>");
                       $.ajax({
                         url: "data/login.html",
                         method:"POST",
                         success:function(result){
-                            $(".cover-container div:last").append(result);
+                            $($("footer").prev()).append(result);
                         },
                       });
                     }
@@ -186,6 +184,7 @@
                 
               </div>
           </div>
+          <div></div>
         <footer class="mastfoot">
           <div class="inner">
             <p>本系統由<a href="http://dp.kpvs.ntpc.edu.tw/bin/home.php">資料處理科</a>賴俊賓製作, <a href="https://github.com/xyz607xx">@Github</a>.</p>
