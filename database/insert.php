@@ -7,5 +7,5 @@
     $result=$db->prepare("INSERT INTO $tableName($title) VALUES ($value)");
     // $result->bindValue('val',$value);
     $result->execute();
-    // echo $value;
+    // var_dump($_POST);
 ?>
