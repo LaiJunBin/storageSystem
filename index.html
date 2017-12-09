@@ -20,7 +20,6 @@
     crossorigin="anonymous"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js" integrity="sha384-alpBpkh1PFOepccYVYDB4do5UnbKysX5WZXm3XxPqe5iKTfUKjNkCk9SaVuEZflJ"
     crossorigin="anonymous"></script>
-<script src="./js/main.js"></script>
 <body>
 
   <div class="site-wrapper">
@@ -76,6 +75,10 @@
                     } else {
                       $(".nav-masthead").append("<a class=nav-link href=# va=Login>登入</a>");
                     }
+                    var script = document.createElement("script");
+                    var body = document.getElementsByTagName("body")[0];
+                    script.src="./js/main.js";
+                    body.append(script);
                   }
                 });
               </script>
