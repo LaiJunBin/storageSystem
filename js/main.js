@@ -1,5 +1,6 @@
 var mainJsLoad = true;
 $(function () {
+    $( "#classSet,#itemSet" ).buttonset();
     var fadeOn = false;
     if (typeof(localStorage['currentPage']) === "undefined" || localStorage['currentPage']=="undefined") {
         localStorage['currentPage'] = "home";
@@ -147,7 +148,30 @@ function removeItem() {
             alert('Ajax request 發生錯誤')
         },
         success: function (result) {
-            alert(result);
+            alert("刪除成功!");
+            reload();
+        }
+    });
+    return false;
+}
+
+function purchase() {
+    var item = $("#itemSet input:checked").attr("va");
+    var className = $("#classSet input:checked").attr("va");
+    var amount = $("input[name=amount]").val();
+    $.ajax({
+        url: './database/insert.php',
+        type: 'POST',
+        data: {
+            table: "storage_record",
+            title: ["sr_item","sr_amount","sr_location"],
+            data: [item,amount,className],
+        },
+        error: function (xhr) {
+            alert('Ajax request 發生錯誤')
+        },
+        success: function (result) {
+            alert("新增紀錄成功!");
             reload();
         }
     });

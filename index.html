@@ -20,6 +20,14 @@
     crossorigin="anonymous"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js" integrity="sha384-alpBpkh1PFOepccYVYDB4do5UnbKysX5WZXm3XxPqe5iKTfUKjNkCk9SaVuEZflJ"
     crossorigin="anonymous"></script>
+    <script>
+      function includeJs(path){
+        var script = document.createElement("script");
+        var body = document.getElementsByTagName("body")[0];
+        script.src=path;
+        body.append(script);
+      }
+    </script>
 <body>
 
   <div class="site-wrapper">
@@ -50,6 +58,7 @@
                       $(".nav-masthead").append("<a class=nav-link href=# va=manageClassName>管理教室</a>");
                       $(".nav-masthead").append("<a class=nav-link href=# va=manageItem>管理物品</a>");
                       $(".nav-masthead").append("<a class=nav-link href=# va=LogOut>登出</a>");
+                      $("#purchase").append("<a href=# class='btn btn-lg btn-secondary' va=purchase>進貨</a>");
                       var availableTags;
                       $.ajax({
                           url: './database/select.php',
@@ -91,13 +100,34 @@
                       $("div[type=removeItem] input[name=item]").autocomplete({
                           source: availableTags
                       });
+                      $.ajax({
+                          url: './database/createClassSet.php',
+                          error: function (xhr) {
+                              reload();
+                          },
+                          success: function (result) {
+                              $("#classSet").append(result);
+                              $.ajax({
+                                url: './database/createItemSet.php',
+                                error: function (xhr) {
+                                    reload();
+                                },
+                                success: function (result) {
+                                    $("#itemSet").append(result);
+                                    if($("#itemSet input").length>0 && $("#classSet input").length>0){
+                                      $("div[type=purchase] form").append("<p class=lead><input class=form-control required type=text name=amount placeholder=請輸入數量></p>");
+                                      $("div[type=purchase] form").append("<p class=lead><button type=submit class='btn btn-dark Btn'>進貨</button></p>");
+                                    }
+                                    includeJs("./js/main.js");
+                                    includeJs("./js/jquery/jquery-ui.min.js");
+                                }
+                            });
+                          }
+                      });
                     } else {
                       $(".nav-masthead").append("<a class=nav-link href=# va=Login>登入</a>");
+                      includeJs("./js/main.js");
                     }
-                    var script = document.createElement("script");
-                    var body = document.getElementsByTagName("body")[0];
-                    script.src="./js/main.js";
-                    body.append(script);
                   }
                 });
               </script>
@@ -108,11 +138,11 @@
 
         <div type="home" class="inner cover content">
           <h1 class="cover-heading">操　　作</h1>
-          <p class="lead">
-            <a href="#" class="btn btn-lg btn-secondary">進貨</a>
+          <p class="lead" id="purchase">
+            
           </p>
           <p class="lead">
-            <a href="#" class="btn btn-lg btn-secondary">庫存量</a>
+            <a href="#" class="btn btn-lg btn-secondary" va="stock">庫存量</a>
           </p>
         </div>
         <div type="manageClassName" class="inner cover content">
@@ -196,6 +226,18 @@
             <p class="lead">
               <button type="submit" class="btn btn-dark Btn">刪除</button>
             </p>
+          </form>
+        </div>
+        <div type="purchase" class="inner cover content">
+          <h1 class="cover-heading">進<span class="space2">　　</span>貨</h1>
+          <form action="#" method="post" onsubmit="return purchase()">
+            <div id="classSet">
+              
+            </div>
+            <hr>
+            <div id="itemSet">
+                
+              </div>
           </form>
         </div>
         <footer class="mastfoot">
