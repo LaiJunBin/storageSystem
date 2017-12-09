@@ -1,11 +1,10 @@
+var mainJsLoad = true;
 $(function () {
     var fadeOn = false;
     if (typeof(localStorage['currentPage']) === "undefined" || localStorage['currentPage']=="undefined") {
         localStorage['currentPage'] = "home";
     }
-    // alert(localStorage['currentPage']);
     checkoutMenu($("a[va=" + localStorage['currentPage'] + "]"));
-    // alert(localStorage['currentPage']);
     $(".nav-masthead a,.content a").click(function () {
         if ($(this).attr("va") == "LogOut") {
             $.ajax({
@@ -22,8 +21,8 @@ $(function () {
             });
         } else if ($(this).attr("va") !== undefined && $(this).attr("va") != localStorage['currentPage'])
             checkoutMenu(this);
+        console.log($(this).attr("va"));
     });
-
     function checkoutMenu(obj) {
         if($(obj).attr("va")==undefined){
             reload();
@@ -41,10 +40,11 @@ $(function () {
                 $(obj).addClass("active");
             }
         }
-        
     }
+    mainJsLoad = typeof(checkoutMenu)==undefined?false:mainJsLoad;
+    // alert(typeof(checkoutMenu));
+    // alert(mainJsLoad);
 });
-
 function onLogin() {
     var username = $("input[name=username]").val();
     var password = $("input[name=password]").val();
@@ -100,8 +100,7 @@ function removeClassName() {
         type: 'POST',
         data: {
             table: "storage_classlist",
-            title: ["sc_className"],
-            data: [$("div[type=removeClassName] input[name=className]").val()],
+            data: $("div[type=removeClassName] input[name=className]").val(),
         },
         error: function (xhr) {
             alert('Ajax request 發生錯誤')
