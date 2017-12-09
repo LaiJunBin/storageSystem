@@ -131,7 +131,6 @@
                       });
                     } else {
                       $(".nav-masthead").append("<a class=nav-link href=# va=Login>登入</a>");
-                      includeJs("./js/main.js");
                       $.ajax({
                         url: "data/login.html",
                         method:"POST",
@@ -147,8 +146,7 @@
                           },
                           success: function (result) {
                               $("#accordion").append(result);
-                              includeJs("./js/main.js");
-                              includeJs("./js/jquery/jquery-ui.min.js");
+                              
                           }
                       });
                   }

@@ -24,4 +24,8 @@
         }
         echo "</div>";
     }
+    echo "<br><script>";
+    echo "includeJs('./js/main.js');";
+    echo "includeJs('./js/jquery/jquery-ui.min.js');";
+    echo "</script>";
 ?>
