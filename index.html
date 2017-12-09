@@ -124,6 +124,16 @@
                             });
                           }
                       });
+                      $.ajax({
+                          url: './database/createSearchItem.php',
+                          error: function (xhr) {
+                              reload();
+                          },
+                          success: function (result) {
+                              $("#accordion").append(result);
+                          }
+                      });
+
                     } else {
                       $(".nav-masthead").append("<a class=nav-link href=# va=Login>登入</a>");
                       includeJs("./js/main.js");
@@ -163,6 +173,15 @@
             <a href="#" class="btn btn-lg btn-secondary" va="removeItem">刪除物品</a>
           </p>
         </div>
+        <div type="stock" class="inner cover content">
+            <h1 class="cover-heading">選擇查看方式</h1>
+            <p class="lead">
+              <a href="#" class="btn btn-lg btn-secondary" va="classSearch">以教室</a>
+            </p>
+            <p class="lead">
+              <a href="#" class="btn btn-lg btn-secondary" va="itemSearch">以物品</a>
+            </p>
+          </div>
         <div type="Login" class="inner cover content">
           <h1 class="cover-heading">登　　入</h1>
           <form action="#" method="post" onsubmit="return onLogin()">
@@ -240,6 +259,12 @@
               </div>
           </form>
         </div>
+        <div type="classSearch" class="inner cover content">
+            <h1 class="cover-heading">以教室查看</h1>
+              <div id="accordion">
+                
+              </div>
+          </div>
         <footer class="mastfoot">
           <div class="inner">
             <p>本系統由<a href="http://dp.kpvs.ntpc.edu.tw/bin/home.php">資料處理科</a>賴俊賓製作, <a href="https://github.com/xyz607xx">@Github</a>.</p>

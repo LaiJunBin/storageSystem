@@ -1,6 +1,7 @@
 var mainJsLoad = true;
 $(function () {
     $( "#classSet,#itemSet" ).buttonset();
+    $( "#accordion" ).accordion({heightStyle: "content" });
     var fadeOn = false;
     if (typeof(localStorage['currentPage']) === "undefined" || localStorage['currentPage']=="undefined") {
         localStorage['currentPage'] = "home";
@@ -159,13 +160,30 @@ function purchase() {
     var item = $("#itemSet input:checked").attr("va");
     var className = $("#classSet input:checked").attr("va");
     var amount = $("input[name=amount]").val();
+    var unit = $("#itemSet input:checked").attr("unit");
+    $.ajax({
+        url: './database/select.php',
+        type: 'POST',
+        data: {
+            table: "storage_record",
+            target: "sr_item",
+            match:"where 待補",
+            all:"true",
+        },
+        error: function (xhr) {
+            reload();
+        },
+        success: function (result) {
+            localStorage['temp']=result;
+        }
+    });
     $.ajax({
         url: './database/insert.php',
         type: 'POST',
         data: {
             table: "storage_record",
-            title: ["sr_item","sr_amount","sr_location"],
-            data: [item,amount,className],
+            title: ["sr_item","sr_amount","sr_unit","sr_location"],
+            data: [item,amount,unit,className],
         },
         error: function (xhr) {
             alert('Ajax request 發生錯誤')
