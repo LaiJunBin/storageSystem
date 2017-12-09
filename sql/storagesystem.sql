@@ -1,15 +1,13 @@
 -- phpMyAdmin SQL Dump
--- version 4.7.4
+-- version 4.6.6
 -- https://www.phpmyadmin.net/
 --
 -- 主機: 127.0.0.1
--- 產生時間： 2017-12-08 13:01:45
--- 伺服器版本: 10.1.28-MariaDB
--- PHP 版本： 7.1.11
+-- 產生時間： 2017-12-09 15:27:33
+-- 伺服器版本: 10.1.19-MariaDB
+-- PHP 版本： 5.6.28
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
-SET AUTOCOMMIT = 0;
-START TRANSACTION;
 SET time_zone = "+00:00";
 
 
@@ -53,14 +51,6 @@ CREATE TABLE `storage_classlist` (
   `sc_className` varchar(10) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
---
--- 資料表的匯出資料 `storage_classlist`
---
-
-INSERT INTO `storage_classlist` (`sc_id`, `sc_className`) VALUES
-(3, '中餐一'),
-(4, '中餐二');
-
 -- --------------------------------------------------------
 
 --
@@ -83,6 +73,7 @@ CREATE TABLE `storage_record` (
   `sr_id` int(10) NOT NULL,
   `sr_item` varchar(30) NOT NULL,
   `sr_amount` int(10) NOT NULL,
+  `sr_unit` varchar(10) NOT NULL,
   `sr_location` varchar(10) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
@@ -123,26 +114,21 @@ ALTER TABLE `storage_record`
 --
 ALTER TABLE `logindata`
   MODIFY `l_id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
-
 --
 -- 使用資料表 AUTO_INCREMENT `storage_classlist`
 --
 ALTER TABLE `storage_classlist`
-  MODIFY `sc_id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
-
+  MODIFY `sc_id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 --
 -- 使用資料表 AUTO_INCREMENT `storage_itemlist`
 --
 ALTER TABLE `storage_itemlist`
   MODIFY `si_id` int(10) NOT NULL AUTO_INCREMENT;
-
 --
 -- 使用資料表 AUTO_INCREMENT `storage_record`
 --
 ALTER TABLE `storage_record`
   MODIFY `sr_id` int(10) NOT NULL AUTO_INCREMENT;
-COMMIT;
-
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
