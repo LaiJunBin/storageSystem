@@ -59,46 +59,54 @@
                       $(".nav-masthead").append("<a class=nav-link href=# va=manageItem>管理物品</a>");
                       $(".nav-masthead").append("<a class=nav-link href=# va=LogOut>登出</a>");
                       $("#purchase").append("<a href=# class='btn btn-lg btn-secondary' va=purchase>進貨</a>");
-                      var availableTags;
+                      $(".cover-container").append("<div></div>");
                       $.ajax({
-                          url: './database/select.php',
-                          type: 'POST',
-                          data: {
-                              table: "storage_classlist",
-                              target: "sc_className",
-                              match:"",
-                              all:"true",
-                          },
-                          error: function (xhr) {
-                              reload();
-                          },
-                          success: function (result) {
-                              localStorage['temp']=result;
-                          }
-                      });
-                      availableTags=localStorage['temp'].split(",");
-                      $("div[type=removeClassName] input[name=className]").autocomplete({
-                          source: availableTags
-                      });
-                      $.ajax({
-                          url: './database/select.php',
-                          type: 'POST',
-                          data: {
-                              table: "storage_itemlist",
-                              target: "si_item",
-                              match:"",
-                              all:"true",
-                          },
-                          error: function (xhr) {
-                              reload();
-                          },
-                          success: function (result) {
-                              localStorage['temp2']=result;
-                          }
-                      });
-                      availableTags=localStorage['temp2'].split(",");
-                      $("div[type=removeItem] input[name=item]").autocomplete({
-                          source: availableTags
+                        url: "data/loginOption.html",
+                        method:"POST",
+                        success:function(result){
+                            $(".cover-container div:last").append(result);
+                            var availableTags;
+                            $.ajax({
+                                url: './database/select.php',
+                                type: 'POST',
+                                data: {
+                                    table: "storage_classlist",
+                                    target: "sc_className",
+                                    match:"",
+                                    all:"true",
+                                },
+                                error: function (xhr) {
+                                    reload();
+                                },
+                                success: function (result) {
+                                    localStorage['temp']=result;
+                                }
+                            });
+                            availableTags=localStorage['temp'].split(",");
+                            $("div[type=removeClassName] input[name=className]").autocomplete({
+                                source: availableTags
+                            });
+                            $.ajax({
+                                url: './database/select.php',
+                                type: 'POST',
+                                data: {
+                                    table: "storage_itemlist",
+                                    target: "si_item",
+                                    match:"",
+                                    all:"true",
+                                },
+                                error: function (xhr) {
+                                    reload();
+                                },
+                                success: function (result) {
+                                    localStorage['temp2']=result;
+                                }
+                            });
+                            availableTags=localStorage['temp2'].split(",");
+                            $("div[type=removeItem] input[name=item]").autocomplete({
+                                source: availableTags
+                            });
+                        },
                       });
                       $.ajax({
                           url: './database/createClassSet.php',
@@ -137,6 +145,14 @@
                     } else {
                       $(".nav-masthead").append("<a class=nav-link href=# va=Login>登入</a>");
                       includeJs("./js/main.js");
+                      $(".cover-container").append("<div></div>");
+                      $.ajax({
+                        url: "data/login.html",
+                        method:"POST",
+                        success:function(result){
+                            $(".cover-container div:last").append(result);
+                        },
+                      });
                     }
                   }
                 });
@@ -155,109 +171,14 @@
             <a href="#" class="btn btn-lg btn-secondary" va="stock">庫存量</a>
           </p>
         </div>
-        <div type="manageClassName" class="inner cover content">
-          <h1 class="cover-heading">管理教室</h1>
-          <p class="lead">
-            <a href="#" class="btn btn-lg btn-secondary" va="addClassName">新增教室</a>
-          </p>
-          <p class="lead">
-            <a href="#" class="btn btn-lg btn-secondary" va="removeClassName">刪除教室</a>
-          </p>
-        </div>
-        <div type="manageItem" class="inner cover content">
-          <h1 class="cover-heading">管理物品</h1>
-          <p class="lead">
-            <a href="#" class="btn btn-lg btn-secondary" va="addItem">新增物品</a>
-          </p>
-          <p class="lead">
-            <a href="#" class="btn btn-lg btn-secondary" va="removeItem">刪除物品</a>
-          </p>
-        </div>
         <div type="stock" class="inner cover content">
-            <h1 class="cover-heading">選擇查看方式</h1>
-            <p class="lead">
-              <a href="#" class="btn btn-lg btn-secondary" va="classSearch">以教室</a>
-            </p>
-            <p class="lead">
-              <a href="#" class="btn btn-lg btn-secondary" va="itemSearch">以物品</a>
-            </p>
-          </div>
-        <div type="Login" class="inner cover content">
-          <h1 class="cover-heading">登　　入</h1>
-          <form action="#" method="post" onsubmit="return onLogin()">
-            <p class="lead">
-              <input class="form-control" type="text" name="username" placeholder="請輸入帳號">
-            </p>
-            <p class="lead">
-              <input class="form-control" type="password" name="password" placeholder="請輸入密碼">
-            </p>
-            <p class="lead" style="text-shadow:0px 0px 0px #fff;text-align:right;">
-              <input type="checkbox" name="autoLogin"> 自動登入
-            </p>
-            <p class="lead">
-              <button type="submit" class="btn btn-dark Btn">登入</button>
-            </p>
-          </form>
-        </div>
-        <div type="addClassName" class="inner cover content">
-          <h1 class="cover-heading">新增教室</h1>
-          <form action="#" method="post" onsubmit="return addClassName()">
-            <p class="lead">
-              <input class="form-control" required type="text" name="className" placeholder="請輸入教室名稱">
-            </p>
-            <p class="lead">
-              <button type="submit" class="btn btn-dark Btn">新增</button>
-            </p>
-          </form>
-        </div>
-        <div type="removeClassName" class="inner cover content">
-          <h1 class="cover-heading">刪除教室</h1>
-          <form action="#" method="post" onsubmit="return removeClassName()">
-            <p class="lead">
-              <input class="form-control" required type="text" name="className" placeholder="請輸入教室名稱">
-            </p>
-            <p class="lead">
-              <button type="submit" class="btn btn-dark Btn">刪除</button>
-            </p>
-          </form>
-        </div>
-
-        <div type="addItem" class="inner cover content">
-          <h1 class="cover-heading">新增物品</h1>
-          <form action="#" method="post" onsubmit="return addItem()">
-            <p class="lead">
-              <input class="form-control" required type="text" name="item" placeholder="請輸入物品名稱">
-            </p>
-            <p class="lead">
-              <input class="form-control" required type="text" name="unit" placeholder="請輸入物品單位">
-            </p>
-            <p class="lead">
-              <button type="submit" class="btn btn-dark Btn">新增</button>
-            </p>
-          </form>
-        </div>
-        <div type="removeItem" class="inner cover content">
-          <h1 class="cover-heading">刪除物品</h1>
-          <form action="#" method="post" onsubmit="return removeItem()">
-            <p class="lead">
-              <input class="form-control" required type="text" name="item" placeholder="請輸入物品名稱">
-            </p>
-            <p class="lead">
-              <button type="submit" class="btn btn-dark Btn">刪除</button>
-            </p>
-          </form>
-        </div>
-        <div type="purchase" class="inner cover content">
-          <h1 class="cover-heading">進<span class="space2">　　</span>貨</h1>
-          <form action="#" method="post" onsubmit="return purchase()">
-            <div id="classSet">
-              
-            </div>
-            <hr>
-            <div id="itemSet">
-                
-              </div>
-          </form>
+          <h1 class="cover-heading">選擇查看方式</h1>
+          <p class="lead">
+            <a href="#" class="btn btn-lg btn-secondary" va="classSearch">以教室</a>
+          </p>
+          <p class="lead">
+            <a href="#" class="btn btn-lg btn-secondary" va="itemSearch">以物品</a>
+          </p>
         </div>
         <div type="classSearch" class="inner cover content">
             <h1 class="cover-heading">以教室查看</h1>
