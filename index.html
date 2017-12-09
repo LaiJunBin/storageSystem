@@ -68,8 +68,27 @@
                           }
                       });
                       availableTags=localStorage['temp'].split(",");
-                      localStorage.removeItem("temp");
                       $("div[type=removeClassName] input[name=className]").autocomplete({
+                          source: availableTags
+                      });
+                      $.ajax({
+                          url: './database/select.php',
+                          type: 'POST',
+                          data: {
+                              table: "storage_itemlist",
+                              target: "si_item",
+                              match:"",
+                              all:"true",
+                          },
+                          error: function (xhr) {
+                              reload();
+                          },
+                          success: function (result) {
+                              localStorage['temp2']=result;
+                          }
+                      });
+                      availableTags=localStorage['temp2'].split(",");
+                      $("div[type=removeItem] input[name=item]").autocomplete({
                           source: availableTags
                       });
                     } else {
@@ -103,6 +122,15 @@
           </p>
           <p class="lead">
             <a href="#" class="btn btn-lg btn-secondary" va="removeClassName">刪除教室</a>
+          </p>
+        </div>
+        <div type="manageItem" class="inner cover content">
+          <h1 class="cover-heading">管理物品</h1>
+          <p class="lead">
+            <a href="#" class="btn btn-lg btn-secondary" va="addItem">新增物品</a>
+          </p>
+          <p class="lead">
+            <a href="#" class="btn btn-lg btn-secondary" va="removeItem">刪除物品</a>
           </p>
         </div>
         <div type="Login" class="inner cover content">
@@ -144,6 +172,32 @@
             </p>
           </form>
         </div>
+
+        <div type="addItem" class="inner cover content">
+          <h1 class="cover-heading">新增物品</h1>
+          <form action="#" method="post" onsubmit="return addItem()">
+            <p class="lead">
+              <input class="form-control" required type="text" name="item" placeholder="請輸入物品名稱">
+            </p>
+            <p class="lead">
+              <input class="form-control" required type="text" name="unit" placeholder="請輸入物品單位">
+            </p>
+            <p class="lead">
+              <button type="submit" class="btn btn-dark Btn">新增</button>
+            </p>
+          </form>
+        </div>
+        <div type="removeItem" class="inner cover content">
+          <h1 class="cover-heading">刪除物品</h1>
+          <form action="#" method="post" onsubmit="return removeItem()">
+            <p class="lead">
+              <input class="form-control" required type="text" name="item" placeholder="請輸入物品名稱">
+            </p>
+            <p class="lead">
+              <button type="submit" class="btn btn-dark Btn">刪除</button>
+            </p>
+          </form>
+        </div>
         <footer class="mastfoot">
           <div class="inner">
             <p>本系統由<a href="http://dp.kpvs.ntpc.edu.tw/bin/home.php">資料處理科</a>賴俊賓製作, <a href="https://github.com/xyz607xx">@Github</a>.</p>
@@ -156,8 +210,4 @@
 
   </div>
 </body>
-<script>
-  // if(typeof(mainJsLoad)==undefined)
-  //   location.reload();
-</script>
 </html>

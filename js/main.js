@@ -21,7 +21,7 @@ $(function () {
             });
         } else if ($(this).attr("va") !== undefined && $(this).attr("va") != localStorage['currentPage'])
             checkoutMenu(this);
-        console.log($(this).attr("va"));
+        // console.log($(this).attr("va"));
     });
     function checkoutMenu(obj) {
         if($(obj).attr("va")==undefined){
@@ -100,6 +100,7 @@ function removeClassName() {
         type: 'POST',
         data: {
             table: "storage_classlist",
+            title: "sc_className",
             data: $("div[type=removeClassName] input[name=className]").val(),
         },
         error: function (xhr) {
@@ -113,7 +114,47 @@ function removeClassName() {
     return false;
 }
 
+function addItem() {
+    $.ajax({
+        url: './database/insert.php',
+        type: 'POST',
+        data: {
+            table: "storage_itemlist",
+            title: ["si_item","si_unit"],
+            data: [$("div[type=addItem] input[name=item]").val(),$("div[type=addItem] input[name=unit]").val()],
+        },
+        error: function (xhr) {
+            alert('Ajax request 發生錯誤')
+        },
+        success: function (result) {
+            alert("新增成功!");
+            reload();
+        }
+    });
+    return false;
+}
+
+function removeItem() {
+    $.ajax({
+        url: './database/delete.php',
+        type: 'POST',
+        data: {
+            table: "storage_itemlist",
+            title: "si_item",
+            data: $("div[type=removeItem] input[name=item]").val(),
+        },
+        error: function (xhr) {
+            alert('Ajax request 發生錯誤')
+        },
+        success: function (result) {
+            alert(result);
+            reload();
+        }
+    });
+    return false;
+}
+
 function reload() {
     $("a[va=home]").click();
-    location.reload();
+    location.href="index.html";
 }
