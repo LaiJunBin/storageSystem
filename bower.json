@@ -1,0 +1,21 @@
+{
+  "name": "storageSystem",
+  "description": "穀保家商餐飲管理科倉儲系統",
+  "main": "",
+  "authors": [
+    "xyz607xx <xyz607xx@gmail.com>"
+  ],
+  "license": "MIT",
+  "homepage": "",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "bootstrap": "^4.0.0",
+    "jquery": "^3.3.1"
+  }
+}
