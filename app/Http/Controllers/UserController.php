@@ -8,7 +8,7 @@ use App\RegisterUser;
 Use App\User;
 use Hash;
 Use App\Jobs\SendSignUpMailJob;
-
+use App\Services\BindingService;
 
 class UserController extends Controller
 {
@@ -102,7 +102,7 @@ class UserController extends Controller
         $mail_binding = [
             'name' => $input['name'],
             'email' => $input['email'],
-            'url' => url('user/verification/'.$input['name']."/".$input['verification']),
+            'url' => url('verification/'.$input['name']."/".$input['verification']),
             'title' => '恭喜註冊 穀保家商餐飲管理科倉儲系統 成功',
             'template' => 'email.signUpEmail'
         ];
@@ -118,8 +118,8 @@ class UserController extends Controller
     }
 
     public function updatePassword(){
-
-        return view('user.updatePassword');
+        $binding = BindingService::binding();
+        return view('user.updatePassword',$binding);
     }
 
     public function updatePasswordProcess(){

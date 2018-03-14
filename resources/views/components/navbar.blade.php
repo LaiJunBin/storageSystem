@@ -14,6 +14,11 @@
                 </button>
                 <div class="dropdown-menu">
                     <a class="dropdown-item" href="{{URL('update-password')}}">更改密碼</a>
+                    @if (isset($dropItems))
+                        @foreach ($dropItems as $item)
+                            <a class="dropdown-item" href="{{$item['url']}}">{{$item['title']}}</a>
+                        @endforeach
+                    @endif
                     <div class="dropdown-divider"></div>
                     <a class="dropdown-item" href="{{URL('/sign-out')}}">登出</a>
                 </div>

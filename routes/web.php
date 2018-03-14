@@ -11,9 +11,7 @@
 |
 */
 
-Route::get('/', function () {
-    return view('index');
-});
+Route::get('/', 'MainController@index');
 Route::get('/login','UserController@login');
 Route::get('/register','UserController@register');
 Route::post('/login','UserController@loginProcess');
@@ -22,3 +20,6 @@ Route::get('/verification/{user}/{code}','RegisterUserController@verification');
 Route::get('/sign-out','UserController@signOut');
 Route::get('/update-password','UserController@updatePassword')->middleware(['user.auth']);
 Route::put('/update-password','UserController@updatePasswordProcess')->middleware(['user.auth']);
+
+Route::get('/addClass','ManagerController@addClass')->middleware(['user.admin.auth']);
+Route::post('/addClass','ManagerController@addClassProcess')->middleware(['user.admin.auth']);
