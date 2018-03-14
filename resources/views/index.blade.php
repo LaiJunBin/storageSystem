@@ -1,5 +1,7 @@
 @extends('layout') 
 @section('content')
+@section('title','穀保家商餐飲管理科倉儲系統')
+@include('components.successModal')
 <div class="row">
     <div class="col-4">
         <div class="list-group" id="list-tab" role="tablist">
