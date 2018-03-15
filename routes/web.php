@@ -17,9 +17,14 @@ Route::get('/register','UserController@register');
 Route::post('/login','UserController@loginProcess');
 Route::post('/register','UserController@registerProcess');
 Route::get('/verification/{user}/{code}','RegisterUserController@verification');
+Route::get('student/verification/{user}/{code}','RegisterUserController@studentVerification');
 Route::get('/sign-out','UserController@signOut');
 Route::get('/update-password','UserController@updatePassword')->middleware(['user.auth']);
 Route::put('/update-password','UserController@updatePasswordProcess')->middleware(['user.auth']);
 
 Route::get('/addClass','ManagerController@addClass')->middleware(['user.admin.auth']);
 Route::post('/addClass','ManagerController@addClassProcess')->middleware(['user.admin.auth']);
+
+Route::get('verificationUser','ManagerController@verificationUser')->middleware(['user.admin.auth']);
+Route::put('verificationUser','ManagerController@verificationUser')->middleware(['user.admin.auth']);
+Route::delete('verificationUser','ManagerController@verificationUser')->middleware(['user.admin.auth']);

@@ -17,4 +17,17 @@ class RegisterUserController extends Controller
         }
         return redirect('/');
     }
+
+    public function studentVerification($user,$code){
+        $query = RegisterUser::where(['name'=>$user,'verification'=>$code])->first();
+        if($query != null){
+            User::create($query->toarray());
+            User::where(['email'=>$query->email])->update([
+                'type'=>'F'
+            ]);
+            $query->delete();
+            return redirect('/')->with('studentRegisterUserSuccess','T');
+        }
+        return redirect('/');
+    }
 }

@@ -12,6 +12,7 @@ class BindingService
             $user_result = User::where(['email'=>session('user_email')])->firstOrFail();
             if($user_result->type == 'A'){
                 $binding['dropItems']['addClass'] = ['url'=>url('addClass'),'title'=>'新增教室'];
+                $binding['dropItems']['verificationUser'] = ['url'=>url('verificationUser'),'title'=>'驗用帳戶'];
             }
         }
         return $binding;

@@ -43,7 +43,7 @@ class UserController extends Controller
         }
         
         $query = User::where(['email' => $input['email']])->first();
-        if($query != null){
+        if($query != null && $query->type != 'F'){
             $is_password_correct = Hash::check($input['password'],$query->password);
             
             if($is_password_correct){
@@ -53,6 +53,8 @@ class UserController extends Controller
             }else{
                 return redirect('/login')->withErrors('密碼錯誤!')->withInput();
             }
+        }elseif($query->type ?? null == 'F'){
+            return redirect('/login')->withErrors('這個帳戶還沒被管理員審核，請聯繫管理員。')->withInput();
         }else{
             $query = RegisterUser::where('email',$input['email'])->first();
             if($query != null){
@@ -89,7 +91,6 @@ class UserController extends Controller
                 'max:191'
             ],
         ];
-        
         $validator = Validator::make($input,$rules);
 
         if($validator->fails()){
@@ -98,17 +99,31 @@ class UserController extends Controller
         $input['password'] = Hash::make($input['password']);
         $input['verification'] = str_random(60);
         RegisterUser::create($input);
+        if(preg_match('/@kpvs.ntpc.edu.tw$/',$input['email'])){
+            $mail_binding = [
+                'name' => $input['name'],
+                'email' => $input['email'],
+                'url' => url('verification/'.$input['name']."/".$input['verification']),
+                'title' => '恭喜註冊 穀保家商餐飲管理科倉儲系統 成功',
+                'template' => 'email.signUpEmail'
+            ];
+            SendSignUpMailJob::dispatch($mail_binding);
+            return redirect('/')->with('signUp','ok');
+        }else{
+            $mail_binding = [
+                'name' => $input['name'],
+                'email' => $input['email'],
+                'url' => url('student/verification/'.$input['name']."/".$input['verification']),
+                'title' => '恭喜註冊 穀保家商餐飲管理科倉儲系統 成功',
+                'template' => 'email.studentSignUpEmail'
+            ];
+            SendSignUpMailJob::dispatch($mail_binding);
+            return redirect('/')->with('studentSignUp','ok');
+        }
+        
+        
 
-        $mail_binding = [
-            'name' => $input['name'],
-            'email' => $input['email'],
-            'url' => url('verification/'.$input['name']."/".$input['verification']),
-            'title' => '恭喜註冊 穀保家商餐飲管理科倉儲系統 成功',
-            'template' => 'email.signUpEmail'
-        ];
-        SendSignUpMailJob::dispatch($mail_binding);
-
-        return redirect('/')->with('signUp','ok');
+        
     }
 
     public function signOut(){
