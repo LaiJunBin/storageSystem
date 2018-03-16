@@ -22,9 +22,16 @@ Route::get('/sign-out','UserController@signOut');
 Route::get('/update-password','UserController@updatePassword')->middleware(['user.auth']);
 Route::put('/update-password','UserController@updatePasswordProcess')->middleware(['user.auth']);
 
-Route::get('/addClass','ManagerController@addClass')->middleware(['user.admin.auth']);
+
 Route::post('/addClass','ManagerController@addClassProcess')->middleware(['user.admin.auth']);
+Route::group(['prefix'=>'/managerClass'],function(){
+    Route::get('','ManagerController@managerClass')->middleware(['user.admin.auth']);
+    Route::delete('delete/{id}','ManagerController@deleteClass')->middleware(['user.admin.auth']);
+    Route::get('update/{id}','ManagerController@updateClass')->middleware(['user.admin.auth']);
+    Route::put('update/{id}','ManagerController@updateClassProcess')->middleware(['user.admin.auth']);
+});
+
 
 Route::get('verificationUser','ManagerController@verificationUser')->middleware(['user.admin.auth']);
-Route::put('verificationUser','ManagerController@verificationUser')->middleware(['user.admin.auth']);
-Route::delete('verificationUser','ManagerController@verificationUser')->middleware(['user.admin.auth']);
+Route::put('verificationUser/{email}','ManagerController@verificationUserOK')->middleware(['user.admin.auth']);
+Route::delete('verificationUser/delete/{email}','ManagerController@verificationUserDelete')->middleware(['user.admin.auth']);

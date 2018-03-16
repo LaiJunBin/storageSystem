@@ -9,15 +9,34 @@ use App\User;
 
 class ManagerController extends Controller
 {
-    public function addClass(){
+    public function managerClass(){
         $binding = BindingService::binding();
-        return view('manager.addClass',$binding);
+        $binding['classItems'] = ClassName::get()->toarray();
+        return view('manager.managerClass',$binding);
     }
 
     public function addClassProcess(){
         $input = Request()->all();
         ClassName::create($input);
-        return redirect('/');
+        return redirect('/managerClass');
+    }
+
+    public function updateClass($id){
+        $classSet = ClassName::where('id',$id)->first();
+        return view('manager.updateClass',['classSet'=>$classSet]);
+    }
+
+    public function updateClassProcess($id){
+        $input=Request()->all();
+        ClassName::where(['id'=>$id])->update([
+            'class_name'=>$input['class_name']
+        ]);
+        return redirect('/managerClass');
+    }
+
+    public function deleteClass($id){
+        ClassName::where('id',$id)->delete();
+        return redirect('/managerClass');
     }
 
     public function verificationUser(){
@@ -25,5 +44,17 @@ class ManagerController extends Controller
         $binding = BindingService::binding();
         $binding['verificationUsers'] = $user_query->toarray();
         return view('manager/verificationUser',$binding);
+    }
+
+    public function verificationUserOK($email){
+        User::where(['email'=>$email])->update([
+            'type' => 'G'
+        ]);
+        return redirect('verificationUser');
+    }
+
+    public function verificationUserDelete($email){
+        User::where(['email'=>$email])->delete();
+        return redirect('verificationUser');
     }
 }

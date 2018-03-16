@@ -9,12 +9,12 @@
                 <h5 class="card-title">申請於{{$user['created_at']}}</h5>
                 <p class="card-text">使用者:{{$user['name']}}</p>
                 <p class="card-text">信箱:{{$user['email']}}</p>
-                <form action="{{url('verificationUser')}}" method="post">
+                <form action="{{url('verificationUser/'.$user['email'])}}" method="post">
                     {{csrf_field()}}
                     {{method_field('PUT')}}
                     <button type="submit" class="btn btn-primary">加入會員</button>
                 </form>
-                <form action="{{url('verificationUser')}}" method="post">
+                <form action="{{url('verificationUser/delete/'.$user['email'])}}" method="post">
                     {{csrf_field()}}
                     {{method_field('DELETE')}}
                     <button type="submit" class="btn btn-primary">刪除會員</button>
