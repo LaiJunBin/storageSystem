@@ -10,7 +10,7 @@
             <form action="{{ url('/addClass') }}" method="post">
                 {{csrf_field()}}
                 <label for="username">請輸入教室名稱：</label>
-                <input class="form-control" type="text" name="class_name" placeholder="請輸入教室名稱" value="{{old('className')}}">
+                <input required class="form-control" type="text" name="class_name" placeholder="請輸入教室名稱" value="{{old('className')}}">
                 <button type="submit" class="btn btn-success">新增</button>
             </form>
         </div>
@@ -32,7 +32,7 @@
                 </div>
             @empty
                 <div class="alert alert-warning" role="alert">
-                    沒有任何帳戶需要審核。
+                    沒有任何教室。
                 </div>
             @endforelse
         </div>

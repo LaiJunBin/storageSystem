@@ -1,5 +1,5 @@
 @extends('layout') 
-@section('title','新增教室') 
+@section('title','修改教室') 
 
  
 @section('content')

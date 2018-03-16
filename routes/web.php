@@ -31,6 +31,13 @@ Route::group(['prefix'=>'/managerClass'],function(){
     Route::put('update/{id}','ManagerController@updateClassProcess')->middleware(['user.admin.auth']);
 });
 
+Route::group(['prefix'=>'material'],function(){
+    Route::get('/','UserFunctionController@material');
+    Route::get('/manager','ManagerController@material');
+    Route::post('/manager','ManagerController@materialAddProcess');
+    Route::get('/update/{id}','ManagerController@materialUpdate');
+});
+
 
 Route::get('verificationUser','ManagerController@verificationUser')->middleware(['user.admin.auth']);
 Route::put('verificationUser/{email}','ManagerController@verificationUserOK')->middleware(['user.admin.auth']);

@@ -13,8 +13,9 @@ class BindingService
             if($user_result->type == 'A'){
                 $binding['dropItems']['manager'] = ['url'=>url('managerClass'),'title'=>'管理教室'];
                 $binding['dropItems']['verificationUser'] = ['url'=>url('verificationUser'),'title'=>'驗用帳戶'];
+                $binding['dropItems']['addMaterial'] = ['url'=>url('material/manager'),'title'=>'管理材料'];
             }else{
-                $binding['dropItems']['lend'] = ['url'=>url('lend'),'title'=>'申請食材'];
+                $binding['dropItems']['material'] = ['url'=>url('material'),'title'=>'材料申請'];
             }
         }
         return $binding;

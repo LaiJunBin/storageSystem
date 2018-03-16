@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Services\BindingService;
 use App\ClassName;
 use App\User;
+use App\Material;
 
 class ManagerController extends Controller
 {
@@ -56,5 +57,27 @@ class ManagerController extends Controller
     public function verificationUserDelete($email){
         User::where(['email'=>$email])->delete();
         return redirect('verificationUser');
+    }
+
+    public function material(){
+        $binding = BindingService::binding();
+        $material = Material::get();
+        $binding['material'] = $material;
+        return view('manager.material',$binding);
+    }
+
+    public function materialAddProcess(){
+        $input = Request()->all();
+        $input['unit'] = serialize($input['unit']);
+        Material::create($input);
+        return redirect('material/manager');
+    }
+
+
+    public function materialUpdate($id){
+        $binding = BindingService::binding();
+        $binding['material'] = Material::where('id',$id)->first()->toarray();
+        $binding['material']['unit'] = unserialize($binding['material']['unit']);
+        return view('manager.updateMaterial',$binding);
     }
 }
