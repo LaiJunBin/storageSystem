@@ -36,6 +36,8 @@ Route::group(['prefix'=>'material'],function(){
     Route::get('/manager','ManagerController@material');
     Route::post('/manager','ManagerController@materialAddProcess');
     Route::get('/update/{id}','ManagerController@materialUpdate');
+    Route::put('/update/{id}','ManagerController@materialUpdateProcess');
+    Route::delete('/delete/{id}','ManagerController@materialDeleteProcess');
 });
 
 

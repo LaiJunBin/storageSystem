@@ -80,4 +80,18 @@ class ManagerController extends Controller
         $binding['material']['unit'] = unserialize($binding['material']['unit']);
         return view('manager.updateMaterial',$binding);
     }
+
+    public function materialUpdateProcess($id){
+        $input = Request()->all();
+        Material::where('id',$id)->update([
+            'item' => $input['item'],
+            'unit' => serialize($input['unit'])
+        ]);
+        return redirect('/material/manager');
+    }
+
+    public function materialDeleteProcess($id){
+        Material::where('id',$id)->delete();
+        return redirect('/material/manager');
+    }
 }

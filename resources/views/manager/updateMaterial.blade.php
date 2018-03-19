@@ -7,7 +7,7 @@
     <div class="card w-100">
         <div class="card-body">
             <h5 class="card-title">修改材料</h5>
-            <form action="{{URL('managerClass/update/'.$material['id'])}}" method="post">
+            <form action="{{URL('material/update/'.$material['id'])}}" method="post">
                 {{csrf_field()}}
                 {{method_field('PUT')}}
                 <label for="item">請輸入新材料名稱：</label>
