@@ -9,6 +9,19 @@
             <h5 class="card-title">新增材料</h5>
             <form action="{{ url('/material/manager') }}" method="post">
                 {{csrf_field()}}
+                <label for="type">材料種類</label>
+                <input type="checkbox" class="materialTypeCheckbox" checked>從現有類別選取
+                <input type="checkbox" class="materialTypeCheckbox">新增種類
+                <div class="materialTypeInput">
+                    <select name="type" class="form-control" required>
+                        @forelse ($material_type as $type)
+                            <option value="{{$type}}">{{$type}}</option>
+                        @empty
+                            <option value="nothing" disabled>沒有任何類別</option>                    
+                        @endforelse
+                    </select>
+                    <input placeholder="輸入種類" disabled type="text" name="type" style="display:none;" class="form-control">
+                </div>
                 <label for="item">請輸入材料名稱：</label>
                 <input required class="form-control" type="text" name="item" placeholder="請輸入材料名稱">
                 <label for="unit">請輸入材料單位：</label>
@@ -69,6 +82,14 @@
             $("#delete_form").on('submit',function(){
                 if(!confirm('確定刪除嗎?'))
                     return false;
+            });
+
+            $(".materialTypeCheckbox").click(function(){
+                var index = $(".materialTypeCheckbox").index(this);
+                $(".materialTypeCheckbox").prop('checked',false);
+                $(this).prop('checked',true);
+                $('.materialTypeInput .form-control').prop('disabled',true).hide();
+                $('.materialTypeInput .form-control').eq(index).prop('disabled',false).fadeIn();
             });
         });
     </script>

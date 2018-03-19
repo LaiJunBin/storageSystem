@@ -7,6 +7,7 @@ use App\Services\BindingService;
 use App\ClassName;
 use App\User;
 use App\Material;
+use App\MaterialType;
 
 class ManagerController extends Controller
 {
@@ -63,11 +64,17 @@ class ManagerController extends Controller
         $binding = BindingService::binding();
         $material = Material::get();
         $binding['material'] = $material;
+        $binding['material_type'] = MaterialType::get()->pluck('type')->toarray();
         return view('manager.material',$binding);
     }
 
     public function materialAddProcess(){
         $input = Request()->all();
+        if(MaterialType::where('type',$input['type'])->first() == null){
+            MaterialType::create([
+                'type' => $input['type']
+            ]);
+        }
         $input['unit'] = serialize($input['unit']);
         Material::create($input);
         return redirect('material/manager');
