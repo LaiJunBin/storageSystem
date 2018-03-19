@@ -17,7 +17,9 @@
                 @foreach ($material['unit'] as $unit)
                     <div id="secondUnit{{$loop->index}}" style="margin:10px 0;">
                         <input required class="form-control" type="text" name="unit[]" value="{{$unit}}" placeholder="請輸入材料單位">
-                        <button type="button" id="removeSecondDiv{{$loop->index}}" class="btn btn-danger">刪除單位</button>
+                        @if (!$loop->first)
+                            <button type="button" id="removeSecondDiv{{$loop->index}}" class="btn btn-danger">刪除單位</button>
+                        @endif
                     </div>
                 @endforeach
                 <div id="unitDiv">

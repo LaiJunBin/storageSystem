@@ -1,4 +1,4 @@
-<footer class="page-footer font-small blue pt-4 mt-4 text-xs-center">
+<footer class="page-footer font-small blue text-xs-center">
     <div class="footer-copyright py-3 text-center">
         資料處理科賴俊賓製作
         <span><a class="github-button" href="https://github.com/xyz607xx" aria-label="Follow @xyz607xx on GitHub">GitHub</a></span>
@@ -11,3 +11,19 @@
         </script>
     </div>
 </footer>
+
+<script>
+    $(function(){
+        $(window).resize(layout);
+        function layout(){
+            var documentHeight = $(document).height();
+            var bodyHeight = $('body').height();
+            if(documentHeight < ( bodyHeight + 20 )){
+                $("footer").css('top',documentHeight +'px');
+            }else{
+                $('footer').css('top','');
+            }
+        }
+        layout();
+    });
+</script>

@@ -33,6 +33,7 @@ Route::group(['prefix'=>'/managerClass'],function(){
 
 Route::group(['prefix'=>'material'],function(){
     Route::get('/','UserFunctionController@material');
+    Route::post('/','UserFunctionController@materialProcess');
     Route::get('/manager','ManagerController@material');
     Route::post('/manager','ManagerController@materialAddProcess');
     Route::get('/update/{id}','ManagerController@materialUpdate');
