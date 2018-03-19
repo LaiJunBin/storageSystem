@@ -37,10 +37,12 @@
     </div><br>
     <div class="card w-100">
         <div class="card-body">
-            <h5 class="card-title">管理材料</h5>
-            <div class="card-deck">
+            <h5 class="card-title">管理材料
+                <button class="btn btn-warning" id="searchMaterialBtn">篩選</button>
+            </h5>
+            <div id="cardGroup">
             @forelse ($material as $item)
-                <div class="card">
+                <div class="card" type="{{$item['type']}}">
                     <div class="card-body">
                         <h5 class="card-title">{{$item['item']}}</h5>
                         <a href="{{URL('material/update/'.$item['id'])}}" class="btn btn-info">修改</a>
@@ -48,13 +50,10 @@
                             {{csrf_field()}}
                             {{method_field('DELETE')}}
                             <button class="btn btn-danger" type="submit" style="width:auto;">刪除</button>
-                        </form>
+                        </form><br>
+                        <span style="font-size:10px;">所屬類別：{{$item['type']}}</span>
                     </div>
                 </div>
-                @if ($loop->index %4 == 3)
-                    </div>
-                    <div class="card-deck">
-                @endif
             @empty
                 <div class="alert alert-warning" role="alert">
                     沒有任何材料。
@@ -91,6 +90,41 @@
                 $('.materialTypeInput .form-control').prop('disabled',true).hide();
                 $('.materialTypeInput .form-control').eq(index).prop('disabled',false).fadeIn();
             });
+
+            $("#searchMaterialBtn").click(function(){
+                $(this).parent().after(
+                    $('.materialTypeInput select').first().clone().attr('id','searchType').css('margin-bottom','10px'));
+                    $("#searchType").prepend('<option value="nothing" selected>無條件</option>');
+                    $('#searchType').on('change',function(){
+                        var value = $(this).find(':checked').text();
+                        cardLayoutReset();
+                        $("#cardGroup .card").addClass('hide');
+                        if(value == '無條件'){
+                            $("#cardGroup .card").removeClass('hide');
+                        }else{
+                            $("#cardGroup .card[type="+value+']').removeClass('hide');
+                        }
+                        layout();
+                    });
+            });
+            function cardLayoutReset(){
+                $("#cardGroup .card").appendTo($("#cardGroup"));
+                $("#cardGroup>.card-deck").remove();
+            }
+            function layout(){
+                while($("#cardGroup>.card:not(.hide)").length>0){
+                    $("#cardGroup").append('<div class="card-deck"></div>');
+                    while($("#cardGroup>.card:not(.hide)").length>0 && $("#cardGroup .card-deck").last().find('.card:not(.hide)').length<4){
+                        $("#cardGroup>.card:not(.hide)").first().appendTo($("#cardGroup .card-deck").last());
+                    }
+                }
+            }
+            layout();
         });
     </script>
+    <style>
+        .hide{
+            display:none;
+        }
+    </style>
 @endsection

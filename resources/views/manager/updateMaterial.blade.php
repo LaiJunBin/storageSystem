@@ -10,6 +10,19 @@
             <form action="{{URL('material/update/'.$material['id'])}}" method="post">
                 {{csrf_field()}}
                 {{method_field('PUT')}}
+                <label for="type">材料種類</label>
+                <input type="checkbox" class="materialTypeCheckbox" checked>從現有類別選取
+                <input type="checkbox" class="materialTypeCheckbox">新增種類
+                <div class="materialTypeInput">
+                    <select name="type" class="form-control" required>
+                        @forelse ($material_type as $type)
+                            <option value="{{$type}}">{{$type}}</option>
+                        @empty
+                            <option value="nothing" disabled>沒有任何類別</option>                    
+                        @endforelse
+                    </select>
+                    <input placeholder="輸入種類" disabled type="text" name="type" style="display:none;" class="form-control">
+                </div>
                 <label for="item">請輸入新材料名稱：</label>
                 <input class="form-control" type="text" name="item" placeholder="請輸入材料名稱" value="{{$material['item']}}">
                 單位：
@@ -49,6 +62,15 @@
                 });
             });
             $('footer').css('position','static');
+
+
+            $(".materialTypeCheckbox").click(function(){
+                var index = $(".materialTypeCheckbox").index(this);
+                $(".materialTypeCheckbox").prop('checked',false);
+                $(this).prop('checked',true);
+                $('.materialTypeInput .form-control').prop('disabled',true).hide();
+                $('.materialTypeInput .form-control').eq(index).prop('disabled',false).fadeIn();
+            });
         })
     </script>
 @endsection

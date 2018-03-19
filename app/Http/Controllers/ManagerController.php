@@ -85,14 +85,22 @@ class ManagerController extends Controller
         $binding = BindingService::binding();
         $binding['material'] = Material::where('id',$id)->first()->toarray();
         $binding['material']['unit'] = unserialize($binding['material']['unit']);
+        $binding['material_type'] = MaterialType::get()->pluck('type')->toarray();
         return view('manager.updateMaterial',$binding);
     }
 
     public function materialUpdateProcess($id){
         $input = Request()->all();
+        
+        if(MaterialType::where('type',$input['type'])->first() == null){
+            MaterialType::create([
+                'type' => $input['type']
+            ]);
+        }
         Material::where('id',$id)->update([
             'item' => $input['item'],
-            'unit' => serialize($input['unit'])
+            'unit' => serialize($input['unit']),
+            'type' => $input['type']
         ]);
         return redirect('/material/manager');
     }
