@@ -39,6 +39,9 @@ class UserFunctionController extends Controller
         if($validator->fails()){
             return redirect('/material')->withErrors($validator)->withInput();
         }
+        $input['item']['amount'] = array_map(function($x){
+            return $x==null?0:$x;
+        },$input['item']['amount']);
         $input['item'] = serialize($input['item']);
         $input['email'] = session('user_email');
         $input['name'] = session('user_name');

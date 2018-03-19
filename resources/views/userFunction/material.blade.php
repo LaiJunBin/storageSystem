@@ -62,12 +62,15 @@
                                 @if ($i+$j<count($material))
                                     <td data-th="材料名稱">{{$material[$i+$j]['item']}}</td>
                                     <td data-th="數量">
-                                        <input type="number" name="item['amount'][{{$material[$i+$j]['id']}}]" value="{{old('item[amount]['.$material[$i+$j]['id'].']')}}" class="form-control">
+                                        {{-- {{'item[amount]['.$material[$i+$j]['id'].']'}} --}}
+                                        <input type="number" name="item[amount][{{$material[$i+$j]['id']}}]" class="form-control" @if (count(old())>0)
+                                            value = {{old()['item']['amount'][$material[$i+$j]['id']]}}
+                                        @endif>
                                     </td>
                                     <td data-th="單位" width="25%">
-                                        <select name="item['unit'][{{$material[$i+$j]['id']}}]" class="form-control">
+                                        <select name="item[unit][{{$material[$i+$j]['id']}}]" class="form-control">
                                             @forelse ($material[$i+$j]['unit'] as $unit)
-                                                <option value="{{$unit}}" @if ($unit == old('item[unit]['.$material[$i+$j]['id'].']'))
+                                                <option value="{{$unit}}" @if (count(old())>0 && $unit == old()['item']['unit'][$material[$i+$j]['id']])
                                                     selected
                                                 @endif>{{$unit}}</option>
                                             @empty
