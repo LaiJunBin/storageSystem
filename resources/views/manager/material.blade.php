@@ -92,20 +92,23 @@
             });
 
             $("#searchMaterialBtn").click(function(){
-                $(this).parent().after(
-                    $('.materialTypeInput select').first().clone().attr('id','searchType').css('margin-bottom','10px'));
-                    $("#searchType").prepend('<option value="nothing" selected>無條件</option>');
-                    $('#searchType').on('change',function(){
-                        var value = $(this).find(':checked').text();
-                        cardLayoutReset();
-                        $("#cardGroup .card").addClass('hide');
-                        if(value == '無條件'){
-                            $("#cardGroup .card").removeClass('hide');
-                        }else{
-                            $("#cardGroup .card[type="+value+']').removeClass('hide');
-                        }
-                        layout();
-                    });
+                if($("#searchType").length ==0 ){
+                    $(this).parent().after(
+                        $('.materialTypeInput select').first().clone().attr('id','searchType').css('margin-bottom','10px'));
+                        $("#searchType").prepend('<option value="nothing" selected>無條件</option>');
+                        $('#searchType').on('change',function(){
+                            var value = $(this).find(':checked').text();
+                            cardLayoutReset();
+                            $("#cardGroup .card").addClass('hide');
+                            if(value == '無條件'){
+                                $("#cardGroup .card").removeClass('hide');
+                            }else{
+                                $("#cardGroup .card[type="+value+']').removeClass('hide');
+                            }
+                            layout();
+                        });
+                    $(this).prop('disabled',true);
+                }
             });
             function cardLayoutReset(){
                 $("#cardGroup .card").appendTo($("#cardGroup"));
