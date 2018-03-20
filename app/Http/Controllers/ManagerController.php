@@ -91,7 +91,6 @@ class ManagerController extends Controller
 
     public function materialUpdateProcess($id){
         $input = Request()->all();
-        
         if(MaterialType::where('type',$input['type'])->first() == null){
             MaterialType::create([
                 'type' => $input['type']
@@ -102,11 +101,16 @@ class ManagerController extends Controller
             'unit' => serialize($input['unit']),
             'type' => $input['type']
         ]);
+        if(Material::where('type',$input['prototype_type'])->first()==null)
+            MaterialType::where('type',$input['prototype_type'])->delete();
         return redirect('/material/manager');
     }
 
     public function materialDeleteProcess($id){
         Material::where('id',$id)->delete();
+        $input = Request()->all();
+        if(Material::where('type',$input['prototype_type'])->first()==null)
+            MaterialType::where('type',$input['prototype_type'])->delete();
         return redirect('/material/manager');
     }
 }

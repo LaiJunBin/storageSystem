@@ -49,6 +49,7 @@
                         <form id="delete_form" action="{{URL('material/delete/'.$item['id'])}}" method="post" style="display: inline;vertical-align: super;">
                             {{csrf_field()}}
                             {{method_field('DELETE')}}
+                            <input type="hidden" name="prototype_type" value="{{$item['type']}}">
                             <button class="btn btn-danger" type="submit" style="width:auto;">刪除</button>
                         </form><br>
                         <span style="font-size:10px;">所屬類別：{{$item['type']}}</span>

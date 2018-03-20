@@ -16,12 +16,15 @@
                 <div class="materialTypeInput">
                     <select name="type" class="form-control" required>
                         @forelse ($material_type as $type)
-                            <option value="{{$type}}">{{$type}}</option>
+                            <option value="{{$type}}" @if ($type == $material['type'])
+                                selected
+                            @endif>{{$type}}</option>
                         @empty
                             <option value="nothing" disabled>沒有任何類別</option>                    
                         @endforelse
                     </select>
-                    <input placeholder="輸入種類" disabled type="text" name="type" style="display:none;" class="form-control">
+                    <input value="{{$material['type']}}" type="hidden" name="prototype_type">
+                    <input placeholder="輸入種類" value="{{$material['type']}}" disabled type="text" name="type" style="display:none;" class="form-control">
                 </div>
                 <label for="item">請輸入新材料名稱：</label>
                 <input class="form-control" type="text" name="item" placeholder="請輸入材料名稱" value="{{$material['item']}}">
