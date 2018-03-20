@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Services\BindingService;
 use App\ClassName;
 Use App\Stock;
+Use App\Material;
 
 class MainController extends Controller
 {
@@ -20,7 +21,8 @@ class MainController extends Controller
                 return $x;
             },$binding['classStock'][$className]);
         }
-        dd($binding);
+        $binding['classStock'] = json_encode($binding['classStock']);
+        $binding['material'] = json_encode(Material::get()->pluck('item','id')->toarray());
         return view('index',$binding);
     }
 }
