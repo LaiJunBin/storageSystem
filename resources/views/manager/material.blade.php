@@ -46,7 +46,7 @@
                     <div class="card-body">
                         <h5 class="card-title">{{$item['item']}}</h5>
                         <a href="{{URL('material/update/'.$item['id'])}}" class="btn btn-info">修改</a>
-                        <form id="delete_form" action="{{URL('material/delete/'.$item['id'])}}" method="post" style="display: inline;vertical-align: super;">
+                        <form class="delete_form" action="{{URL('material/delete/'.$item['id'])}}" method="post" style="display: inline;vertical-align: super;">
                             {{csrf_field()}}
                             {{method_field('DELETE')}}
                             <input type="hidden" name="prototype_type" value="{{$item['type']}}">
@@ -79,7 +79,7 @@
                 });
             });
             $('footer').css('position','static');
-            $("#delete_form").on('submit',function(){
+            $(".delete_form").on('submit',function(){
                 if(!confirm('確定刪除嗎?'))
                     return false;
             });

@@ -23,10 +23,15 @@
                     <div class="card-body">
                         {{$cls['class_name']}}
                         <a href="{{URL('managerClass/update/'.$cls['id'])}}" class="btn btn-info">修改</a>
-                        <form action="{{URL('managerClass/delete/'.$cls['id'])}}" method="post" style="display: inline;vertical-align: super;">
+                        <form action="{{URL('managerClass/delete/'.$cls['id'])}}" class="deleteForm" method="post" style="display: inline;vertical-align: super;">
                             {{csrf_field()}}
                             {{method_field('DELETE')}}
                             <button class="btn btn-danger" type="submit" style="width:auto;">刪除</button>
+                            <script>
+                                $(".deleteForm").on('submit',function(){
+                                    return confirm('確定刪除嗎?');
+                                });
+                            </script>
                         </form>
                     </div>
                 </div>

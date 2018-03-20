@@ -151,7 +151,7 @@
                 });
             }else
                 $("#nav-tabContent>div").html('沒有紀錄'); 
-            console.log(data);
+            //console.log(data);
         }
         $(".searchCheckbox").click(function(){
             $('.searchCheckbox').prop('checked',false);
@@ -188,7 +188,7 @@
             return false;
         });
         render_data($("a.list-group-item.active").text());
-        console.log(classData);
+        //console.log(classData);
     });
 </script>
 <style>
