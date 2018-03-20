@@ -42,4 +42,9 @@
             @endforelse
         </div>
     </div>
+    <script>
+        $(function(){
+            $('input[name=class_name]').focus();
+        });
+    </script>
 @endsection
