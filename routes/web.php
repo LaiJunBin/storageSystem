@@ -15,7 +15,7 @@ Route::get('/', 'MainController@index');
 Route::get('/login','UserController@login');
 Route::get('/register','UserController@register');
 Route::post('/login','UserController@loginProcess');
-Route::post('/register','UserController@registerProcess');
+Route::post('/register','UserController@registerProcess')->middleware(['user.sign.up']);
 Route::get('/verification/{user}/{code}','RegisterUserController@verification');
 Route::get('student/verification/{user}/{code}','RegisterUserController@studentVerification');
 Route::get('/sign-out','UserController@signOut');
