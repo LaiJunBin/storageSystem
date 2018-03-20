@@ -15,7 +15,7 @@
     <div class="col-8">
         <div class="tab-content" id="nav-tabContent">            
             <div class="tab-pane show active" role="tabpanel" aria-labelledby="list-home-list">
-                123
+                
             </div>
         </div>
     </div>
@@ -32,6 +32,12 @@
             $(this).addClass('active');
             $("#nav-tabContent>div").hide();
             var currentClass = $(this).text();
+            render_data(currentClass);
+            setTimeout(function(){
+                $("#nav-tabContent>div").fadeIn();
+            },100)
+        });
+        function render_data(currentClass){
             var data = {};
             $.each(classData[currentClass],function(class_index,currentClassData){
                 if (data[currentClassData.category] == undefined)
@@ -45,20 +51,49 @@
                         parseInt(currentClassData.item.amount[unit_index]);
                 });
             });
-            $("#nav-tabContent>div").html('');
-            Object.keys(data).forEach(function(category){
-                $("#nav-tabContent>div").append('<button class="list-group-item list-group-item-action">'+category+'</button>');
-                
-            });
+            if(Object.keys(data).length != 0){
+                $("#nav-tabContent>div").html('');
+                Object.keys(data).forEach(function(category){
+                    $("#nav-tabContent>div").append('<button class="list-group-item list-group-item-action">'+category+'</button>');
+                    $("#nav-tabContent>div").append('<div class="classMoreDiv" style="display:none;"></div>');
+                    $("#nav-tabContent>div .classMoreDiv").last().html(
+                        '<table class="rwd-table">'+
+                            '<tr>'+
+                                '<th>材料</th>'+
+                                '<th>數量</th>'+
+                                '<th>單位</th>'+
+                            '</tr>'+
+                        '</table>'
+                    )
+                    Object.keys(data[category]).forEach(function(item){
+                        Object.keys(data[category][item]).forEach(function(unit){
+                            $("#nav-tabContent>div .classMoreDiv").last().find('.rwd-table').append(
+                                '<tr>'+
+                                    '<td data-th="材料">'+item+'</td>'+
+                                    '<td data-th="數量">'+data[category][item][unit]+'</td>'+
+                                    '<td data-th="單位">'+unit+'</td>'+
+                                '</tr>'
+                            );
+                            //console.log(category,item,unit,data[category][item][unit]);
+                        });
+                    });
+                    
+                });
+                $('button.list-group-item-action').click(function(){
+                    if($('button.list-group-item-action:not(.active)').index(this)!=-1){
+                        var index = $('button.list-group-item-action').index(this);
+                        $('.classMoreDiv').hide();
+                        $('button.list-group-item-action').removeClass('active');
+                        $(this).addClass('active');
+                        $('.classMoreDiv').eq(index).slideDown();
+                    }
+                });
+            }else
+                $("#nav-tabContent>div").html('沒有紀錄');
             console.log(data);
-
-            setTimeout(function(){
-                $("#nav-tabContent>div").fadeIn();
-            },100)
-        });
-        console.log(classData,materialData);
+        }
+        render_data($("a.list-group-item.active").text());
     });
-    
 </script>
 <style>
     .list-group-item{
