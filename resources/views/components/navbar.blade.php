@@ -8,7 +8,7 @@
         <ul class="mr-auto"></ul>
         <ul class="navbar-nav">
         @if (session()->has('user_name'))
-            <div class="btn-group">
+            <div class="dropdown">
                 <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     使用者：{{session('user_name')}}
                 </button>

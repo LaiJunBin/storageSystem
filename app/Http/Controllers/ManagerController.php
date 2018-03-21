@@ -83,10 +83,15 @@ class ManagerController extends Controller
             ]);
         }
         foreach($input['unit'] as $unit){
-            StockAll::create([
-                'item' => $input['item'],
-                'unit' => $unit
-            ]);
+            if(StockAll::where([
+                ['item',$input['item']],
+                ['unit',$unit]
+            ])->first() == null){
+                StockAll::create([
+                    'item' => $input['item'],
+                    'unit' => $unit
+                ]);
+            }
         }
         $input['unit'] = serialize($input['unit']);
         Material::create($input);
@@ -105,7 +110,22 @@ class ManagerController extends Controller
 
     public function materialUpdateProcess($id){
         $input = Request()->all();
-        dd($input);
+        foreach($input['unit'] as $unit){
+            // dd(StockAll::where([
+            //     ['item',$input['item']],
+            //     ['unit',$unit]
+            // ])->first() == null);
+            if(StockAll::where([
+                ['item',$input['item']],
+                ['unit',$unit]
+            ])->first() == null){
+                StockAll::create([
+                    'item' => $input['item'],
+                    'unit' => $unit
+                ]);
+            }
+        }
+        
         if(MaterialType::where('type',$input['type'])->first() == null){
             MaterialType::create([
                 'type' => $input['type']
@@ -123,14 +143,14 @@ class ManagerController extends Controller
     }
 
     public function materialDeleteProcess($id){
-        $unitSet = unserialize(Material::where('id',$id)->first()->unit);
-        $item = Material::where('id',$id)->first()->item;
-        foreach($unitSet as $unit){
-            StockAll::where([
-                ['item' , $item],
-                ['unit' , $unit]
-            ])->delete();
-        }
+        // $unitSet = unserialize(Material::where('id',$id)->first()->unit);
+        // $item = Material::where('id',$id)->first()->item;
+        // foreach($unitSet as $unit){
+        //     StockAll::where([
+        //         ['item' , $item],
+        //         ['unit' , $unit]
+        //     ])->delete();
+        // }
         Material::where('id',$id)->delete();
         $input = Request()->all();
         if(Material::where('type',$input['prototype_type'])->first()==null)
