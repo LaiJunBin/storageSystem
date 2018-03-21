@@ -14,7 +14,7 @@
     <main class="container">
         @include('components.navbar',['navbarTitle'=>'穀保家商餐飲管理科倉儲系統'])
         @yield('content')
-        @include('components.footer')
+        {{-- @include('components.footer') --}}
     </main>
 </body>
 </html>

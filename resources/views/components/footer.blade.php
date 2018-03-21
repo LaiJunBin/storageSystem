@@ -15,6 +15,7 @@
 <script>
     $(function(){
         $(window).resize(layout);
+        
         function layout(){
             var documentHeight = $(document).height();
             var bodyHeight = $('body').height();

@@ -9,7 +9,7 @@ use App\User;
 use App\Material;
 use App\MaterialType;
 use App\Stock;
-
+use App\StockAll;
 
 class ManagerController extends Controller
 {
@@ -76,13 +76,21 @@ class ManagerController extends Controller
 
     public function materialAddProcess(){
         $input = Request()->all();
+        // dd($input);
         if(MaterialType::where('type',$input['type'])->first() == null){
             MaterialType::create([
                 'type' => $input['type']
             ]);
         }
+        foreach($input['unit'] as $unit){
+            StockAll::create([
+                'item' => $input['item'],
+                'unit' => $unit
+            ]);
+        }
         $input['unit'] = serialize($input['unit']);
         Material::create($input);
+        
         return redirect('material/manager');
     }
 
@@ -97,6 +105,7 @@ class ManagerController extends Controller
 
     public function materialUpdateProcess($id){
         $input = Request()->all();
+        dd($input);
         if(MaterialType::where('type',$input['type'])->first() == null){
             MaterialType::create([
                 'type' => $input['type']
@@ -109,10 +118,19 @@ class ManagerController extends Controller
         ]);
         if(Material::where('type',$input['prototype_type'])->first()==null)
             MaterialType::where('type',$input['prototype_type'])->delete();
+        
         return redirect('/material/manager');
     }
 
     public function materialDeleteProcess($id){
+        $unitSet = unserialize(Material::where('id',$id)->first()->unit);
+        $item = Material::where('id',$id)->first()->item;
+        foreach($unitSet as $unit){
+            StockAll::where([
+                ['item' , $item],
+                ['unit' , $unit]
+            ])->delete();
+        }
         Material::where('id',$id)->delete();
         $input = Request()->all();
         if(Material::where('type',$input['prototype_type'])->first()==null)
