@@ -16,4 +16,10 @@
 @elseif(session()->has('studentRegisterUserSuccess'))
     @include('components.studentRegisterUserSuccess')
     {{session()->forget('studentRegisterUserSuccess')}}
+@elseif(session()->has('forgetUser'))
+    @include('components.forgetUser')
+    {{session()->forget('forgetUser')}}
+@elseif(session()->has('forgetUserSuccess'))
+    @include('components.forgetUserSuccess')
+    {{session()->forget('forgetUserSuccess')}}
 @endif

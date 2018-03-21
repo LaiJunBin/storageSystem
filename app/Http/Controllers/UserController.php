@@ -9,6 +9,8 @@ Use App\User;
 use Hash;
 Use App\Jobs\SendSignUpMailJob;
 use App\Services\BindingService;
+Use App\ForgetUser;
+
 
 class UserController extends Controller
 {
@@ -175,5 +177,76 @@ class UserController extends Controller
             return redirect('update-password')->withErrors('舊密碼錯誤!');
         }
         return redirect('/')->with('updatePasswordSuccess','OK');
+    }
+
+
+    public function forgetPassword(){ 
+        return view('user.forget',BindingService::binding());
+    }
+
+    public function forgetPasswordProcess(){
+        $input = request()->all();
+        
+        $rules = [
+            'name'=>[
+                'required',
+                'max:10',
+            ],
+            'email'=>[
+                'required',
+                'max:150',
+                'email',
+            ],
+            'password'=>[
+                'required',
+                'min:6',
+                'max:191',
+                'same:password_confirmation',
+            ],
+            'password_confirmation'=>[
+                'required',
+                'min:6',
+                'max:191'
+            ],
+        ];
+        
+        $validator = Validator::make($input,$rules);
+
+        if($validator->fails()){
+            return redirect('/forgetPassword')->withErrors($validator)->withInput();
+        }
+        $user_query = User::where(['email'=>$input['email'],'name'=>$input['name']])->first();
+        if($user_query == null){
+            return redirect('/forgetPassword')->withErrors('查無此帳戶')->withInput();
+        }
+        $input['verification'] = str_random(60);
+        $input['password'] = Hash::make($input['password']);
+        ForgetUser::create($input);
+
+        $mail_binding = [
+            'name' => $input['name'],
+            'email' => $input['email'],
+            'url' => url('forgetPassword/verification/'.$input['name']."/".$input['verification']),
+            'title' => '重設 穀保家商餐飲管理科倉儲系統 密碼',
+            'template' => 'email.forgetUserEmail'
+        ];
+        SendSignUpMailJob::dispatch($mail_binding);
+
+        return redirect('/')->with(['forgetUser'=>'ok']);
+    }
+
+    public function forgetPasswordVerification($user,$code){
+        $forget_result = ForgetUser::where(['verification'=>$code])->first();
+        if($forget_result != null){
+            $user_result = User::where(['email'=>$forget_result->email])->first();
+            if($user_result != null){
+                $user_result->update([
+                    'password' => $forget_result->password
+                ]);
+                $forget_result->delete();
+                return redirect('/')->with('forgetUserSuccess','ok');
+            }
+        }
+        return redirect('/');
     }
 }

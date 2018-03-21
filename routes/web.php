@@ -21,7 +21,9 @@ Route::get('student/verification/{user}/{code}','RegisterUserController@studentV
 Route::get('/sign-out','UserController@signOut');
 Route::get('/update-password','UserController@updatePassword')->middleware(['user.auth']);
 Route::put('/update-password','UserController@updatePasswordProcess')->middleware(['user.auth']);
-
+Route::get('/forgetPassword','UserController@forgetPassword');
+Route::post('/forgetPassword','UserController@forgetPasswordProcess');
+Route::get('/forgetPassword/verification/{user}/{code}','UserController@forgetPasswordVerification');
 
 Route::post('/addClass','ManagerController@addClassProcess')->middleware(['user.admin.auth']);
 Route::group(['prefix'=>'/managerClass'],function(){
