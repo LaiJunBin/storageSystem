@@ -51,3 +51,5 @@ Route::group(['prefix'=>'material'],function(){
 Route::get('verificationUser','ManagerController@verificationUser')->middleware(['user.admin.auth']);
 Route::put('verificationUser/{email}','ManagerController@verificationUserOK')->middleware(['user.admin.auth']);
 Route::delete('verificationUser/delete/{email}','ManagerController@verificationUserDelete')->middleware(['user.admin.auth']);
+Route::put('verificationUser/toggleType/{id}','ManagerController@UserToggleType');
+Route::delete('verificationUser/user/delete/{id}','ManagerController@UserDelete');

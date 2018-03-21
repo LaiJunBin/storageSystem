@@ -47,6 +47,10 @@ class ManagerController extends Controller
         $user_query = User::where(['type'=>'F'])->get();
         $binding = BindingService::binding();
         $binding['verificationUsers'] = $user_query->toarray();
+        $binding['users'] = User::where([
+            ['type','!=','R'],
+            ['type','!=','F'],
+        ])->get()->toarray();
         return view('manager/verificationUser',$binding);
     }
 
@@ -164,6 +168,19 @@ class ManagerController extends Controller
         unset($input['_method']);
         Stock::where('id',$id)->update($input);
         return redirect('/manager/material/record');
+    }
+
+    public function UserToggleType($id){
+        $user = User::where('id',$id)->first();
+        User::where('id',$id)->update([
+            'type' => ($user->type=='A')?'G':'A'
+        ]);
+        return redirect('verificationUser')->with('selected','1');
+    }
+
+    public function UserDelete($id){
+        User::where('id',$id)->delete();
+        return redirect('verificationUser')->with('selected','1');
     }
 
 }

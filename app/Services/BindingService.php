@@ -13,7 +13,7 @@ class BindingService
             $binding['dropItems']['material'] = ['url'=>url('material'),'title'=>'材料申請'];
             if($user_result->type == 'A' || $user_result->type == 'R'){
                 $binding['dropItems']['manager'] = ['url'=>url('managerClass'),'title'=>'管理教室'];
-                $binding['dropItems']['verificationUser'] = ['url'=>url('verificationUser'),'title'=>'驗證帳戶'];
+                $binding['dropItems']['verificationUser'] = ['url'=>url('verificationUser'),'title'=>'管理帳戶'];
                 $binding['dropItems']['addMaterial'] = ['url'=>url('material/manager'),'title'=>'管理材料'];
             }
             if($user_result->type == 'R'){
