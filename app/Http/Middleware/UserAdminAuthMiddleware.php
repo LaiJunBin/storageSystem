@@ -19,7 +19,7 @@ class UserAdminAuthMiddleware
         $is_correct = false;
         if(session()->has('user_email')){
             $user_result = User::where(['email'=>session('user_email')])->firstOrFail();
-            $is_correct = $user_result->type == 'A';
+            $is_correct = $user_result->type == 'A' || $user_result->type == 'R';
         }
         if(!$is_correct)
             return redirect('/');

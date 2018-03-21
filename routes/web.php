@@ -25,6 +25,10 @@ Route::get('/forgetPassword','UserController@forgetPassword');
 Route::post('/forgetPassword','UserController@forgetPasswordProcess');
 Route::get('/forgetPassword/verification/{user}/{code}','UserController@forgetPasswordVerification');
 
+Route::get('/manager/material/record','ManagerController@materialRecord');
+Route::get('/manager/stock/update/{id}','ManagerController@stockUpdate');
+Route::put('/manager/stock/update/{id}','ManagerController@stockUpdateProcess');
+
 Route::post('/addClass','ManagerController@addClassProcess')->middleware(['user.admin.auth']);
 Route::group(['prefix'=>'/managerClass'],function(){
     Route::get('','ManagerController@managerClass')->middleware(['user.admin.auth']);

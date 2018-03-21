@@ -8,6 +8,8 @@ use App\ClassName;
 use App\User;
 use App\Material;
 use App\MaterialType;
+use App\Stock;
+
 
 class ManagerController extends Controller
 {
@@ -113,4 +115,55 @@ class ManagerController extends Controller
             MaterialType::where('type',$input['prototype_type'])->delete();
         return redirect('/material/manager');
     }
+
+    public function materialRecord(){
+        $binding = BindingService::binding();
+        $binding['stock'] = Stock::where('date','>=',date('Y-m-d'))->orderBy('date')->get()->toarray();
+        $binding['stock'] = array_map(function($x){
+            $x['item'] = unserialize($x['item']);
+            return $x;
+        },$binding['stock']);
+        
+        return view('manager.materialRecord',$binding);
+    }
+
+    public function stockUpdate($id){
+        $binding = BindingService::binding();
+        $binding['stock'] = Stock::where('id',$id)->first()->toarray();
+        $binding['stock']['item'] = unserialize($binding['stock']['item']);
+        
+        $binding['material'] = Material::get()->toarray();
+        $binding['material'] = array_map(function($x){
+            $x['unit'] = unserialize($x['unit']);
+            return $x;
+        },$binding['material']);
+        $binding['classNames'] = ClassName::get()->pluck('class_name')->toarray();
+        $binding['materialType'] = MaterialType::get()->pluck('type')->toarray();
+        
+        $binding['temp'] = array_map(function($x) use ($binding){
+            if(array_key_exists($x['id'],array_keys($binding['stock']['item']['amount'])))
+            {
+                $x['unit'] = unserialize($x['unit']);
+                return $x;
+            }
+        },Material::where('type',$binding['stock']['category'])->get()->toarray());
+        $binding['temp'] = array_filter($binding['temp']);
+        foreach($binding['temp'] as $temp){
+            $binding['currentMaterial'][$temp['id']] = $temp;
+        }
+        unset($binding['temp']);
+        if(!isset($binding['currentMaterial']))
+            $binding['currentMaterial']=[];
+        return view('manager.stock',$binding);
+    }
+
+    public function stockUpdateProcess($id){
+        $input = Request()->all();
+        $input['item'] = serialize($input['item']);
+        unset($input['_token']);
+        unset($input['_method']);
+        Stock::where('id',$id)->update($input);
+        return redirect('/manager/material/record');
+    }
+
 }
