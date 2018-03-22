@@ -53,3 +53,6 @@ Route::put('verificationUser/{email}','ManagerController@verificationUserOK')->m
 Route::delete('verificationUser/delete/{email}','ManagerController@verificationUserDelete')->middleware(['user.admin.auth']);
 Route::put('verificationUser/toggleType/{id}','ManagerController@UserToggleType');
 Route::delete('verificationUser/user/delete/{id}','ManagerController@UserDelete');
+
+Route::get('/manager/purchase','managerController@purchase');
+Route::post('/manager/purchase','managerController@purchaseProcess');

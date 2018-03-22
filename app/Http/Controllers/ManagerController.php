@@ -221,4 +221,44 @@ class ManagerController extends Controller
         return redirect('verificationUser')->with('selected','1');
     }
 
+
+    public function purchase(){
+        $binding = BindingService::binding();
+        $items = Material::get()->pluck('item')->unique()->toarray();
+        $binding['material'] = [];
+        foreach($items as $item){
+            $current = Material::where('item',$item)->get();
+            $unitSet = $current->pluck('unit')->toarray();
+            $current = $current->first()->toarray();
+            $current['unit'] = [];
+            foreach($unitSet as $unitString){
+                $unitArray = unserialize($unitString);
+                foreach($unitArray as $unit){
+                    if(array_search($unit,$current['unit'])===false)
+                        array_push($current['unit'],$unit);
+                }
+            }
+            unset($current['type']);
+            array_push($binding['material'],$current);
+        }
+        // dd($binding);
+        return view('manager.purchase',$binding);
+    }
+
+    public function purchaseProcess(){
+        $input = Request()->all();
+        foreach($input['item'] as $item){
+            if($item['amount'] != null){
+                $current = StockAll::where([
+                    ['item',$item['name']],
+                    ['unit',$item['unit']]
+                ]);
+                $amount = $current->first()->amount;
+                $current->update([
+                    'amount' => $amount += $item['amount']
+                ]);
+            }
+        }
+        return redirect('/');
+    }
 }
