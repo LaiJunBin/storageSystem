@@ -201,6 +201,21 @@ class ManagerController extends Controller
 
     public function stockUpdateProcess($id){
         $input = Request()->all();
+        $stock = unserialize(Stock::where('id',$id)->first()->item);
+        $errorMsg = [];
+        foreach(array_keys($input['item']['amount']) as $key){
+            $item = Material::where('id',$key)->first()->item;
+            $amount = StockAll::where([
+                ['item',$item],
+                ['unit',$input['item']['unit'][$key]]
+            ])->first()->amount;
+            if($input['item']['amount'][$key]>($stock['amount'][$key]+$amount)){
+                array_push($errorMsg,$item."超過庫存量!");
+            }
+        }
+        if(count($errorMsg)>0){
+            return redirect('/material')->withErrors($errorMsg)->withInput();
+        }   
         $input['item'] = serialize($input['item']);
         unset($input['_token']);
         unset($input['_method']);

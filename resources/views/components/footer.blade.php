@@ -12,7 +12,7 @@
     </div>
 </footer>
 
-<script>
+{{-- <script>
     $(function(){
         $(window).resize(layout);
         
@@ -27,4 +27,4 @@
         }
         layout();
     });
-</script>
+</script> --}}
