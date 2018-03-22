@@ -261,4 +261,12 @@ class ManagerController extends Controller
         }
         return redirect('/');
     }
+
+    public function purchaseRecordList(){
+        $binding = BindingService::binding();
+        $binding['records'] = StockAll::where('amount','>',0)->get()->toarray();
+        return view('manager.purchaseRecord',$binding);
+    }
+
+
 }

@@ -6,7 +6,8 @@
     <div class="card text-center">
         <div class="card-body">
             <h2>進貨</h2>
-            <form action="{{url('manager/purchase')}}" method="post">
+            <a href="{{URL('manager/purchase/record/list')}}">查看庫存</a>
+            <form action="{{url('manager/purchase/')}}" method="post">
                 {{csrf_field()}}
                 <table class="rwd-table">
                     <tr>

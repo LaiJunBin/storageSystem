@@ -56,3 +56,4 @@ Route::delete('verificationUser/user/delete/{id}','ManagerController@UserDelete'
 
 Route::get('/manager/purchase','managerController@purchase');
 Route::post('/manager/purchase','managerController@purchaseProcess');
+Route::get('/manager/purchase/record/list','managerController@purchaseRecordList');
