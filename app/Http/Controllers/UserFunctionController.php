@@ -10,7 +10,7 @@ use App\Material;
 use Validator;
 use App\MaterialType;
 use App\Stock;
-
+use App\StockAll;
 
 class UserFunctionController extends Controller
 {
@@ -42,6 +42,35 @@ class UserFunctionController extends Controller
         $input['item']['amount'] = array_map(function($x){
             return $x==null?0:$x;
         },$input['item']['amount']);
+        if(count(array_unique($input['item']['amount']))==1 && array_values($input['item']['amount'])[0]==0){
+            return redirect('/material')->withErrors('至少要申請一種材料')->withInput();
+        }
+        $errorMsg = [];
+        foreach(array_keys($input['item']['amount']) as $key){
+            $item = Material::where('id',$key)->first()->item;
+            $amount = StockAll::where([
+                ['item',$item],
+                ['unit',$input['item']['unit'][$key]]
+            ])->first()->amount;
+            if($input['item']['amount'][$key]>$amount){
+                array_push($errorMsg,$item."超過庫存量!");
+            }
+        }
+        if(count($errorMsg)>0){
+            return redirect('/material')->withErrors($errorMsg)->withInput();
+        }
+        foreach(array_keys($input['item']['amount']) as $key){
+            $item = Material::where('id',$key)->first()->item;
+            StockAll::where([
+                ['item',$item],
+                ['unit',$input['item']['unit'][$key]]
+            ])->update([
+                'amount' => StockAll::where([
+                    ['item',$item],
+                    ['unit',$input['item']['unit'][$key]]
+                ])->first()->amount-$input['item']['amount'][$key]
+            ]);
+        }
         $input['item'] = serialize($input['item']);
         $input['email'] = session('user_email');
         $input['name'] = session('user_name');

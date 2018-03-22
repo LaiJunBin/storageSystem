@@ -18,7 +18,7 @@ class BindingService
             }
             if($user_result->type == 'R'){
                 $binding['dropItems']['materialRecord'] = ['url'=>url('manager/material/record'),'title'=>'管理申請'];
-                $binding['dropItems']['purchase'] = ['url'=>url('manager/purchase'),'title'=>'管理倉庫'];
+                $binding['dropItems']['purchase'] = ['url'=>url('manager/purchase'),'title'=>'進貨'];
             }
         }
         return $binding;

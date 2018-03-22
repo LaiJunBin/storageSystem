@@ -259,7 +259,7 @@ class ManagerController extends Controller
                 ]);
             }
         }
-        return redirect('/');
+        return redirect('manager/purchase/record/list');
     }
 
     public function purchaseRecordList(){

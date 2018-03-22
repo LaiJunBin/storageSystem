@@ -39,7 +39,6 @@ class UserController extends Controller
         ];
         
         $validator = Validator::make($input,$rules);
-
         if($validator->fails()){
             return redirect('/login')->withErrors($validator)->withInput();
         }

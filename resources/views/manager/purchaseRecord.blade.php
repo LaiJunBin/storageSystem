@@ -26,6 +26,7 @@
     <div class="card text-center">
         <div class="card-body">
             <h2>庫存量</h2>
+            <a href="{{URL('manager/purchase/')}}">進貨</a>
             @if (count($records)==0)
                 <div class="alert alert-warning">沒有庫存</div>
             @else
